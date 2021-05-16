@@ -39,9 +39,17 @@ class ImgApp extends Component {
   }
 }
 
+class ImgCaption extends Component {
+
+  render() {
+    return (<div className="Text"></div>)
+  }
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <ImgApp />
+    <ImgCaption />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -20,3 +20,9 @@ code {
   height: 40vmin;
   pointer-events: none;
 }
+
+.Text {
+  text-align: right;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font: 200;
+}
