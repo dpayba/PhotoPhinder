@@ -9,8 +9,10 @@
 1. Start by cloning repository
 2. Change directory to **cs35l-project-react-app**
 3. Run essential npm commands
-    - **npm install --save firebase**
+    - **npm install** (installs dependencies listed in package.json)
     - **npm start**
+
+When adding a new node package to the project, make sure to install the package with the --save option (e.g. **npm install --save NEWPACKAGE**). This will allow other contributors to simply run **npm install** next time they merge your changes, without having to install each package and its correct version one-by-one.
 
 ### Git Commands For Reference
 - **git clone**: Use to clone repository at start
