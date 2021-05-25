@@ -1,11 +1,8 @@
 # cs35L-final-project
 
 >basic description and overview of app
-
->details about unique features
-  
+>details about unique features 
 >who did what
-  
 >backend functionality
 
 ### Important Commands
@@ -29,3 +26,4 @@
 - Always log any new commands or installations other members may need to run the code properly
     - Can add to the important commands section
 - Communicate before merging to master
+- All code that should be modified is in /src folder
