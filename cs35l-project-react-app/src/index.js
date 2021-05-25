@@ -1,60 +1,55 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import './App.css';
-import logo from './logo.svg'; //important for handling images
-import axios from 'axios'; //important for handling images (replace with AWS image handler?)
-import reportWebVitals from './reportWebVitals';
-import Amplify from "aws-amplify";
-import awsExports from "./aws-exports";
-Amplify.configure(awsExports);
+import React, { useState } from "react";
+import { render } from "react-dom";
+import { storage } from './firebase';
 
-class ImgApp extends Component {
-  state = {
-    selectedFile: null
-  }
+const ReactFirebaseFileUpload = () => {
+  const [image, setImage] = useState(null); // variable stored if file
+  const [url, setUrl] = useState(""); // url variable stores url of image after uploading
+  const [progress, setProgress] = useState(0);
 
-  fileUploadHandler = () => {
-    const fd = new FormData();
-    fd.append('image', this.state.selectedFile, this.state.selectedFile.name)
-    axios.post("", fd, {onUploadProgress: progressEvent => { //this is what we would replace with AWS if we can; here is where we put a link for storing data in backend
-      console.log("Upload Progress: " + Math.round(progressEvent.loaded / progressEvent.total * 100))}}) 
-      .then(res => {console.log(res);}); 
-  }
+  const handleChange = e => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0]); // stores image in data type
+    }
+  };
 
-  fileSelectedHandler = event => {
-    this.setState({
-    selectedFile: event.target.files[0]})
-  }
-
-  render()
-  {
-    return (
-      <div className="ImgApp">
-        <input type="file" onChange={this.fileSelectedHandler}/>
-        <button onClick={this.fileUploadHandler}>Upload</button>
-      </div>
+  const handleUpload = () => { // upload button
+    const uploadTask = storage.ref(`images/${image.name}`).put(image); // create firebase images folder
+    uploadTask.on (
+      "state_changed",
+      snapshot => { // current progress of upload
+        const progress = Math.round (
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      }, 
+      error => { // check if error
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("images")
+          .child(image.name) 
+          .getDownloadURL()
+          .then(url => {
+            setUrl(url);
+          });
+      }
     )
-  }
-}
+  }; 
 
-class ImgCaption extends Component {
+    return (
+        <div>
+            <progress value={progress} max="100" />
+            <br/>
+            <br/>
+            <input type="file" onChange={handleChange} />
+            <button onClick={handleUpload}>Upload</button>
+            <br />
+            <br/>
+            <img src={url || "http://via.placeholder.come/300x400"} alt="firebase-image" />
+        </div>
+    );
+};
 
-  render() {
-    return (<div className="Text"></div>)
-  }
-}
-
-ReactDOM.render(
-  <React.StrictMode>
-    <ImgApp />
-    <ImgCaption />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+render (<ReactFirebaseFileUpload />, document.querySelector("#root"));
