@@ -107,3 +107,7 @@ dist
 *~
 *.swp
 .*.sw?
+
+
+#Mac Temp File
+.DS_Store

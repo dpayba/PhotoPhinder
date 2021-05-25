@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ImgApp {
+  text-align: center;
+}
+
+.ImgApp-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.Text {
+  text-align: right;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font: 200;
+}

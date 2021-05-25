@@ -1,9 +1,10 @@
 import Main from './example.js';
+import FileUpload from './components/file-upload.js'
 
 const App = () => {
     return (
         <div>
-            <Main />
+            <FileUpload />
         </div>
     );
 };
