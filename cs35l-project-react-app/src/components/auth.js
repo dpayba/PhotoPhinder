@@ -40,6 +40,7 @@ class SignIn extends React.Component {
             .then((userCredential) => {
                 // Signed in
                 var user = userCredential.user;
+                // this user variable will be used in most other functionality
 
                 this.props.onSignIn(user); 
                 // ^ this line is for the example in example.js
