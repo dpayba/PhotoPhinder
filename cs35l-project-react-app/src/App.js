@@ -1,41 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import { Post, PostCreator } from './components/posts.js';
+/* below is a demo of the Post and PostCreator components. For demo purposes,
+ * I passed in a static postId and currentUserId of a preexisting post and user
+ * for the Post component, and the userId of a preexisting user for the PostCreator
+ * component. Check out components/posts for more information. 
+ * */
 
-function App() {
+const App = () => {
     return (
         <div>
-            <AmplifySignOut />
-            {/* optional sign out button */}
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p>
-                        Edit <code>src/App.js</code> and save to reload.
-                    </p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn React
-                    </a>
-                </header>
-            </div>
+        {/*<PostCreator onPostCreate={(postId) => console.log("Post created", postId)} currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> */}
+        <Post postId="-Ma_8hv3-wFTqCjCHw3U" currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> 
         </div>
     );
-}
+};
 
-export default withAuthenticator(App);
-/* provides login functionality for the entire app 
- * see https://docs.amplify.aws/lib/auth/getting-started/q/platform/js#enable-sign-up-sign-in-and-sign-out 
- * The Amplify docs say that we can customize login and signup frontend 
- * functionality. I initially wanted a way to login by just providing email and password, without any email
- * verification. But after a few hours of trying that I gave up. Amplify made it hard and I don't think it's 
- * that bad of a thing to require email verification. 
- *
- * One thing we can definitely do to customize the login and signup screen is to just do some custom css to 
- * modify the imported ui components as described here: https://docs.amplify.aws/ui/customization/theming/q/framework/react.
- * 
- * */
+
+export default App;
