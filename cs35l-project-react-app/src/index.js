@@ -39,6 +39,7 @@ class ImgApp extends Component {
   }
 }
 
+
 class ImgCaption extends Component {
 
   render() {
