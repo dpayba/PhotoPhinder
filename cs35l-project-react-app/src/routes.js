@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
-import { Route, IndexRoute } from 'react-router';
+import { Switch, Route } from 'react-router-dom';
 import App from './App';
 import Frontpage from './frontpage'
 
 
-export default (
-    <Route path="/" component={App}>
-      <IndexRoute component={Frontpage} />
-      <Route path="/posts" component={PostPage} />
-      <Route path="/my-profile" component={ProfilePage} />
-    </Route>
-  );
+const Routes = () => {
+    return(
+    <Switch>
+        <Route exact path="/" component={Frontpage}></Route>
+    </Switch>
+    );
+}
 
-  //other routes are placeholders for the other pages ppl are making --Rowan
+export default Routes;
+
+
+
+
+  //other routes are needed for the other pages ppl are making --Rowan
 

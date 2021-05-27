@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { Router, hashHistory as history } from 'react-router';
-import routes from './routes'
+import Routes from './routes'
 import reportWebVitals from './reportWebVitals';
 import Amplify from "aws-amplify";
 import awsExports from "./aws-exports";
+import { BrowserRouter } from 'react-router-dom';
 Amplify.configure(awsExports);
 
 class ImgApp extends Component {
@@ -48,7 +48,9 @@ class ImgCaption extends Component {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router routes={routes} history={history} />,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
     <ImgApp />
     <ImgCaption />
   </React.StrictMode>,
