@@ -1,13 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Routes from './routes'
+import axios from 'axios';
+import Routes from './routes';
 import reportWebVitals from './reportWebVitals';
-import Amplify from "aws-amplify";
-import awsExports from "./aws-exports";
 import { BrowserRouter } from 'react-router-dom';
-Amplify.configure(awsExports);
 
 class ImgApp extends Component {
   state = {

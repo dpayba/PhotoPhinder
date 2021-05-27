@@ -12,7 +12,7 @@ class Frontpage extends Component
     {
         return(
         <div>
-            <header>Welcome To *insert app title here*</header>
+            <header className="App-header">Welcome To *insert app title here*</header>
             <Link className="App" to="/feed">Browse Photos</Link>,
             <Link className="App" to="/my-profile">Your Profile</Link>
             <footer>*insert Copyright + Our Names*</footer>
