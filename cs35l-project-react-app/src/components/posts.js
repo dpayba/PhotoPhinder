@@ -1,97 +1,32 @@
 import React from 'react';
-import { storage } from '../firebase';
+import { firebase, storage } from '../firebase';
 import db from '../firebase';
 
 class Post extends React.Component {
-    constructor(props) {
-        super(props);
-        /* it's possible that we will need to 
-         * move this state to a higher level 
-         * component eventually.
-         * For now, this component takes care
-         * of fetching data for a post from 
-         * the database given the post's id
-         * and the auth user's id.
-         *
-         * We can also add a caption, etc.
-         * */
-        this.state = {
-            imgUrl: '',
-            likes: {},
-            loading: true,
-            creatorUsername: '',
-        };
-        this.instanceDbRef = db.ref('posts').child(this.props.postId); 
-        /* keep the key in the database for the current post for easy access */
-    }
-
-    async fetchInstanceData() {
-        const response = await this.instanceDbRef.get();
-        const payload = response.val();
-        const imgUrl = await storage
-            .ref('images/post-images')
-            .child(`${this.props.postId}.jpg`)
-            .getDownloadURL();
-        const creatorDataResponse = await db
-            .ref('users')
-            .child(payload.creatorId)
-            .get();
-        const creatorUsername = creatorDataResponse.val().username;
-        this.setState({
-            imgUrl,
-            likes: payload.likes === undefined ? {} : payload.likes,
-            loading: false,
-            creatorUsername,
-        });
-    }
-
-    currentUserHasLiked() {
-        return this.props.currentUserId in this.state.likes;
-    }
-
-    async addCurrentUserLike() {
-        if (this.currentUserHasLiked()) {
-            return;
-        }
-        console.log('Add current user like called');
-        var likes = JSON.parse(JSON.stringify(this.state.likes));
-        likes[this.props.currentUserId] = true;
-        await this.instanceDbRef.child('likes').set(likes);
-        this.setState({
-            likes,
-        });
-    }
-
-    async removeCurrentUserLike() {
-        if (!this.currentUserHasLiked()) {
-            return;
-        }
-        console.log('Remove current user like called');
-        var likes = JSON.parse(JSON.stringify(this.state.likes));
-        delete likes[this.props.currentUserId];
-        await this.instanceDbRef.child('likes').set(likes);
-        this.setState({
-            likes,
-        });
-    }
-
-    componentDidMount() {
-        this.fetchInstanceData();
-    }
-
     render() {
         return (
-            <div>
+            <div className="post">
                 {/* styling and formatting of this
                     can be redone. what's shown
-                    below is for demo purposes */}
-                <p>{this.state.creatorUsername}</p>
-                <img src={this.state.imgUrl} alt="Post Image" />
-                <p>likes: {Object.keys(this.state.likes).length}</p>
-                <p>loading: {String(this.state.loading)}</p>
-                <p>currentUserHasLiked: {String(this.currentUserHasLiked())}</p>
-                <button onClick={() => this.addCurrentUserLike()}>Like</button>
-                <button onClick={() => this.removeCurrentUserLike()}>
+                    below is for demo purposes.
+                    Current styling is in the post
+                    class in App.css */}
+                <p>{this.props.creatorUsername}</p>
+                <img
+                    width="500"
+                    height="450"
+                    src={this.props.imgUrl}
+                    alt="Post Image"
+                />
+                {/* ^^I wasn't able to figure out how
+                    to make the image a fixed size
+                    without stretching */}
+                <p>likes: {Object.keys(this.props.likes).length}</p>
+                <p>{String(this.props.currentUserHasLiked)}</p>
+                <button onClick={() => this.props.addCurrentUserLike()}>
+                    Like
+                </button>
+                <button onClick={() => this.props.removeCurrentUserLike()}>
                     Unlike
                 </button>
             </div>
@@ -99,9 +34,229 @@ class Post extends React.Component {
     }
 }
 
+class Feed extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            posts: [],
+            loading: true,
+        };
+    }
+
+    fetchPostImg(postId) {
+        return storage
+            .ref('images/post-images')
+            .child(`${postId}.jpg`)
+            .getDownloadURL();
+    }
+
+    fetchForeignInformationForPosts(posts) {
+        /* this fetches information for each post that is not present within
+         * the actual post instance in the db. For example, the image for
+         * post is stored in firebase storage, not the db, and this function
+         * fetches that. It also fetches the username of the creator of the
+         * post, by looking up the user with the id of post.creatorId in the
+         * db */
+        var imgFetchTasks = [];
+        for (var post of posts) {
+            imgFetchTasks.push(this.fetchPostImg(post.id));
+        }
+        return Promise.all(imgFetchTasks) // wait for all images to be fetched
+            .then((imgUrls) => {
+                console.assert(imgUrls.length === posts.length);
+                for (var i = 0; i < imgUrls.length; i++) {
+                    posts[i].imgUrl = imgUrls[i];
+                }
+                var creatorFetchTasks = [];
+                for (var post of posts) {
+                    creatorFetchTasks.push(
+                        db.ref('users').child(post.creatorId).get(),
+                    );
+                }
+
+                // wait for all usernames (of the creators of the posts) to
+                // be fetched
+                return Promise.all(creatorFetchTasks).then((snapshots) => {
+                    console.assert(snapshots.length === posts.length);
+
+                    for (var i = 0; i < snapshots.length; i++) {
+                        posts[i].creatorUsername = snapshots[i].val().username;
+                    }
+
+                    for (post of posts) {
+                        post.likes = post.likes === undefined ? {} : post.likes;
+                    }
+
+                    this.setState({
+                        posts,
+                        loading: false,
+                    });
+                });
+            });
+    }
+
+    fetchAllPostInstances() {
+        /* this gets all post instances in the database and passes the response
+         * to this.fetchForeignInformationForPosts to get the remaining data
+         * for the posts */
+
+        // const response = await db.ref('posts').orderByChild('timeCreated').limitToLast(15).get();
+        // ^^ use this if we decide to paginate the posts
+        return db
+            .ref('posts')
+            .orderByChild('timeCreated')
+            .get()
+            .then((snapshot) => {
+                const postsObj = snapshot.val(); // sorted object by ascending timeCreated
+                const posts = Object.keys(postsObj)
+                    .sort()
+                    .reverse()
+                    .map((key) => ({ ...postsObj[key], id: key })); // sorted array by descending timeCreated
+                return this.fetchForeignInformationForPosts(posts);
+            });
+    }
+
+    fetchPostInstancesCreatedByUser(userId) {
+        /* similar to this.fetchAllPostInstances() except it gets post that were
+         * created by the user with id == userId. */
+
+        // const response = await db.ref('posts').orderByChild('timeCreated').limitToLast(15).get();
+        // ^^ use this if we decide to paginate the posts
+
+        return db
+            .ref('posts')
+            .orderByChild('creatorId')
+            .equalTo(userId)
+            .get()
+            .then((snapshot) => {
+                const postsObj = snapshot.val();
+                var posts = Object.keys(postsObj).map((key) => ({
+                    ...postsObj[key],
+                    id: key,
+                }));
+
+                posts.sort((post) => post.id);
+                posts.reverse(); // sorted array by descending timeCreated
+
+                return this.fetchForeignInformationForPosts(posts);
+            });
+    }
+
+    componentDidMount() {
+        if (this.props.createdByUser)
+            return this.fetchPostInstancesCreatedByUser(
+                this.props.createdByUser,
+            );
+        else return this.fetchAllPostInstances();
+    }
+
+    currentUserHasLiked(post) {
+        return firebase.auth().currentUser.uid in post.likes;
+    }
+
+    addCurrentUserLike(postId) {
+        /* find post with id == postId, update the likes for
+         * it, and send a request to the db to do the same */
+
+        var postIndex;
+
+        for (var i = 0; i < this.state.posts.length; i++) {
+            console.log(this.state.posts[i].id);
+            if (this.state.posts[i].id === postId) postIndex = i;
+        }
+
+        console.assert(
+            postIndex !== undefined,
+            `post with id ${postId} not found`,
+        );
+
+        if (this.currentUserHasLiked(this.state.posts[postIndex])) {
+            return;
+        }
+
+        var posts = this.state.posts.slice();
+        var likes = posts[postIndex].likes;
+        likes[firebase.auth().currentUser.uid] = true;
+
+        posts[postIndex].likes = likes;
+
+        return db
+            .ref('posts')
+            .child(posts[postIndex].id)
+            .child('likes')
+            .set(likes)
+            .then((val) => {
+                this.setState({
+                    posts,
+                });
+            });
+    }
+
+    removeCurrentUserLike(postId) {
+        /* find post with id == postId, update the likes for
+         * it, and send a request to the db to do the same */
+        var postIndex;
+
+        for (var i = 0; i < this.state.posts.length; i++) {
+            console.log(this.state.posts[i].id);
+            if (this.state.posts[i].id === postId) postIndex = i;
+        }
+
+        console.assert(
+            postIndex !== undefined,
+            `post with id ${postId} not found`,
+        );
+
+        if (!this.currentUserHasLiked(this.state.posts[postIndex])) {
+            return;
+        }
+
+        var posts = this.state.posts.slice();
+        var likes = posts[postIndex].likes;
+        delete likes[firebase.auth().currentUser.uid];
+
+        posts[postIndex].likes = likes;
+
+        return db
+            .ref('posts')
+            .child(posts[postIndex].id)
+            .child('likes')
+            .set(likes)
+            .then((val) => {
+                this.setState({
+                    posts,
+                });
+            });
+    }
+
+    render() {
+        const posts = this.state.posts.map((postData) => (
+            <Post
+                {...postData}
+                currentUserHasLiked={this.currentUserHasLiked(postData)}
+                removeCurrentUserLike={() =>
+                    this.removeCurrentUserLike(postData.id)
+                }
+                addCurrentUserLike={() => this.addCurrentUserLike(postData.id)}
+                key={postData.id}
+            />
+        ));
+
+        return (
+            <div>
+                <p>Loading: {String(this.state.loading)}</p>
+                
+                {/* edit App.css class feed to modify the styling of the feed */}
+                <div className="feed"> {posts} </div>
+            </div>
+        );
+    }
+}
+
 class PostCreator extends React.Component {
     constructor(props) {
-        super(props); // must pass in auth user id 
+        super(props); 
 
         this.state = {
             loading: false,
@@ -130,15 +285,13 @@ class PostCreator extends React.Component {
 
     createPost() {
         const post = db.ref('posts').push({
-            creatorId: this.props.currentUserId,
+            creatorId: firebase.auth().currentUser.uid,
+            timeCreated: +new Date(), // timestamp for current time
         });
         const postId = post.key;
 
         return this.uploadInstanceImg(postId).then(() => {
-            this.props.onPostCreate(postId); 
-            /* Signal to parent component that we're done 
-             * creating the post. Give the parent the postId.
-             * */
+            this.props.history.push('/feed');
         });
     }
 
@@ -148,6 +301,23 @@ class PostCreator extends React.Component {
                 {/* styling and formatting of this
                     can be redone. what's shown
                     below is for demo purposes */}
+
+                {/* please feel free to remove the buttons once a better form of navigation
+                    has been established */}
+                <div style={{ marginBottom: '2rem' }}>
+                    <button onClick={() => this.props.history.push('/feed')}>
+                        Goto feed
+                    </button>
+                    <button onClick={() => this.props.history.push('/profile')}>
+                        Goto profile
+                    </button>
+                    <button onClick={() => this.props.history.push('/login')}>
+                        Goto login
+                    </button>
+                    <button onClick={() => this.props.history.push('/signup')}>
+                        Goto signup
+                    </button>
+                </div>
                 <input type="file" onChange={(e) => this.handleFileInput(e)} />
                 <br />
                 <button onClick={() => this.createPost()}>Post</button>
@@ -156,4 +326,4 @@ class PostCreator extends React.Component {
     }
 }
 
-export { Post, PostCreator };
+export { Post, PostCreator, Feed };

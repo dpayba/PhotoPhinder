@@ -1,10 +1,11 @@
 import { firebase } from '../firebase';
+import db from '../firebase';
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-/* 
+/*
  * Simple implementation of sign in and sign up component,
- * to show how to sign in using firebase once form fields 
+ * to show how to sign in using firebase once form fields
  * have been collected.
  *
  * For a more robust auth solution, looking at this guy's
@@ -12,7 +13,6 @@ import React from 'react';
  * https://github.com/TallanGroberg/firebase-auth-tutorial
  *
  * */
-
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -39,14 +39,19 @@ class SignIn extends React.Component {
             .auth()
             .signInWithEmailAndPassword(this.state.email, this.state.password)
             .then((userCredential) => {
-                // Signed in
                 var user = userCredential.user;
-                // this user variable will be used in most other functionality
 
-                this.props.onSignIn(user); 
-                // ^ this line is for the example in example.js
+                /* if another redirect location has been specified, go there.
+                 * otherwise, go to /feed */
+                if (
+                    this.props.location.state &&
+                    this.props.location.state.from
+                ) {
+                    this.props.history.push(this.props.location.state.from);
+                } else {
+                    this.props.history.push('/feed');
+                }
 
-                console.log('Signed in:', user);
             })
             .catch((error) => {
                 var errorCode = error.code;
@@ -74,22 +79,25 @@ class SignIn extends React.Component {
                         onChange={this.handlePasswordInput}
                     />
                 </label>
-                <button onClick={() => {
-                    this.submit();
-                    this.props.history.push("/upload");
-                }
-                }>Sign In</button>
-                <br/>
                 <button
-                    onClick={() => { 
-                        this.props.history.push("/signup");
+                    onClick={() => {
+                        this.submit();
                     }}
-                >Sign Up</button>
+                >
+                    Sign In
+                </button>
+                <br />
+                <button
+                    onClick={() => {
+                        this.props.history.push('/signup');
+                    }}
+                >
+                    Sign Up
+                </button>
             </div>
         );
     }
 }
-
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -98,9 +106,11 @@ class SignUp extends React.Component {
         this.state = {
             email: '',
             password: '',
+            username: '',
         };
         this.handlePasswordInput = this.handlePasswordInput.bind(this);
         this.handleEmailInput = this.handleEmailInput.bind(this);
+        this.handleUsernameInput = this.handleUsernameInput.bind(this);
     }
 
     handleEmailInput(event) {
@@ -111,15 +121,27 @@ class SignUp extends React.Component {
         this.setState({ password: event.target.value });
     }
 
+    handleUsernameInput(event) {
+        this.setState({ username: event.target.value });
+    }
+
     submit() {
         firebase
             .auth()
-            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .createUserWithEmailAndPassword(
+                this.state.email,
+                this.state.password,
+            )
             .then((userCredential) => {
                 // Signed in
                 var user = userCredential.user;
-                // ...
-                console.log('Signed in:', user);
+
+                // create profile instance in db with username
+                db.ref('users')
+                    .child(user.uid)
+                    .set({ username: this.state.username });
+
+                this.props.history.push('/feed');
             })
             .catch((error) => {
                 var errorCode = error.code;
@@ -137,6 +159,14 @@ class SignUp extends React.Component {
                         type="text"
                         value={this.state.email}
                         onChange={this.handleEmailInput}
+                    />
+                </label>
+                <label>
+                    Username:
+                    <input
+                        type="text"
+                        value={this.state.username}
+                        onChange={this.handleUsernameInput}
                     />
                 </label>
                 <label>
@@ -148,12 +178,14 @@ class SignUp extends React.Component {
                     />
                 </label>
                 <button onClick={() => this.submit()}>Sign Up</button>
-                <br/>
+                <br />
                 <button
-                    onClick={() => { 
-                        this.props.history.push("/login");
+                    onClick={() => {
+                        this.props.history.push('/login');
                     }}
-                >Back To Login</button>
+                >
+                    Back To Login
+                </button>
             </div>
         );
     }

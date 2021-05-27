@@ -49,8 +49,6 @@ ReactDOM.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>
-    <ImgApp />
-    <ImgCaption />
   </React.StrictMode>,
   document.getElementById('root')
 );
