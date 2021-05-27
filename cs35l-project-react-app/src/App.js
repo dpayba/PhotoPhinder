@@ -10,6 +10,12 @@ const App = () => {
     return (
         <div className="App">
         <header className="App-header">Sample Header</header>
+        <br/>
+        <button
+                    onClick={() => { 
+                        this.props.history.push("/upload");
+                    }}
+                >Upload Photo</button>
         <Routes />
         {/*<PostCreator onPostCreate={(postId) => console.log("Post created", postId)} currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> */}
         {/* <Post postId="-Ma_8hv3-wFTqCjCHw3U" currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  />  */}
