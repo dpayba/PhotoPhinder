@@ -76,7 +76,7 @@ class SignIn extends React.Component {
                 </label>
                 <button onClick={() => {
                     this.submit();
-                    //this.props.history.push("/upload");
+                    this.props.history.push("/upload");
                 }
                 }>Sign In</button>
                 <br/>

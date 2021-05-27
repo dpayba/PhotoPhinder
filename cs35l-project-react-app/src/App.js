@@ -21,7 +21,7 @@ const App = () => {
                     <Route path="/login" component={SignIn} />
                     <Route path="/signup" component={SignUp} />
                     <Route path="/upload" component={FirebaseUpload} />
-                    <Route path="/feed" render={<Post postId="-Ma_8hv3-wFTqCjCHw3U" currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2" />}/>
+                    <Route path="/feed" render={Post}/>
                 </Switch>
             </div>
         </Router>
