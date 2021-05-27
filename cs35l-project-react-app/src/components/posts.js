@@ -22,7 +22,7 @@ class Post extends React.Component {
                     to make the image a fixed size
                     without stretching */}
                 <p>likes: {Object.keys(this.props.likes).length}</p>
-                <p>{String(this.props.currentUserHasLiked)}</p>
+                <p>currentUserHasLiked: {String(this.props.currentUserHasLiked)}</p>
                 <button onClick={() => this.props.addCurrentUserLike()}>
                     Like
                 </button>
