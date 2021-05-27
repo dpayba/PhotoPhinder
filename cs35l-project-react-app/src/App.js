@@ -1,4 +1,5 @@
 import { Post, PostCreator } from './components/posts.js';
+import { SignIn } from './components/auth.js';
 /* below is a demo of the Post and PostCreator components. For demo purposes,
  * I passed in a static postId and currentUserId of a preexisting post and user
  * for the Post component, and the userId of a preexisting user for the PostCreator
@@ -8,8 +9,9 @@ import { Post, PostCreator } from './components/posts.js';
 const App = () => {
     return (
         <div>
-        {/*<PostCreator onPostCreate={(postId) => console.log("Post created", postId)} currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> */}
-        <Post postId="-Ma_8hv3-wFTqCjCHw3U" currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> 
+        {/*<PostCreator onPostCreate={(postId) => console.log("Post created", postId)} currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  />         <Post postId="-Ma_8hv3-wFTqCjCHw3U" currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> */}
+        <SignIn onSignIn={() => console.log('bruh')} />
+
         </div>
     );
 };
