@@ -1,6 +1,7 @@
 import { Post, PostCreator } from './components/posts.js';
 import {SignIn} from "./components/auth.js";
 import {SignUp} from "./components/auth.js";
+import {FirebaseUpload} from "./components/file-upload.js";
 //import {Upload} from "./components/file-upload.js";
 //import {Posts} from "./components/posts.js";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -19,6 +20,7 @@ const App = () => {
                     <Route path="/" exact component={SignIn} />
                     <Route path="/login" component={SignIn} />
                     <Route path="/signup" component={SignUp} />
+                    <Route path="/upload" component={FirebaseUpload} />
                 </Switch>
             </div>
         </Router>
