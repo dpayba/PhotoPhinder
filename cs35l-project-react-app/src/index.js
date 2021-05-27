@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { Router, hashHistory as history } from 'react-router';
+import routes from './routes'
 import reportWebVitals from './reportWebVitals';
 import Amplify from "aws-amplify";
 import awsExports from "./aws-exports";
@@ -46,7 +48,9 @@ class ImgCaption extends Component {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router routes={routes} history={history} />,
+    <ImgApp />
+    <ImgCaption />
   </React.StrictMode>,
   document.getElementById('root')
 );

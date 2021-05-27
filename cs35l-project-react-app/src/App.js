@@ -8,6 +8,8 @@ import { Post, PostCreator } from './components/posts.js';
 const App = () => {
     return (
         <div>
+        <header>Sample Header</header>
+        <main>{this.props.children}</main>
         {/*<PostCreator onPostCreate={(postId) => console.log("Post created", postId)} currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> */}
         <Post postId="-Ma_8hv3-wFTqCjCHw3U" currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> 
         </div>
