@@ -1,4 +1,5 @@
 import { firebase } from '../firebase';
+import { Link } from 'react-router-dom';
 import React from 'react';
 
 /* 
@@ -73,7 +74,17 @@ class SignIn extends React.Component {
                         onChange={this.handlePasswordInput}
                     />
                 </label>
-                <button onClick={() => this.submit()}>Sign In</button>
+                <button onClick={() => {
+                    this.submit();
+                    this.props.history.push("/upload");
+                }
+                }>Sign In</button>
+                <br/>
+                <button
+                    onClick={() => { 
+                        this.props.history.push("/signup");
+                    }}
+                >Sign Up</button>
             </div>
         );
     }
@@ -137,6 +148,12 @@ class SignUp extends React.Component {
                     />
                 </label>
                 <button onClick={() => this.submit()}>Sign Up</button>
+                <br/>
+                <button
+                    onClick={() => { 
+                        this.props.history.push("/login");
+                    }}
+                >Back To Login</button>
             </div>
         );
     }

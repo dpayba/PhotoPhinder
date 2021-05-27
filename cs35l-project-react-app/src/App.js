@@ -12,10 +12,11 @@ const App = () => {
         <header className="App-header">Sample Header</header>
         <Routes />
         {/*<PostCreator onPostCreate={(postId) => console.log("Post created", postId)} currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> */}
-        <Post postId="-Ma_8hv3-wFTqCjCHw3U" currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> 
+        {/* <Post postId="-Ma_8hv3-wFTqCjCHw3U" currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  />  */}
         </div>
     );
 };
+
 
 
 export default App;
