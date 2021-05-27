@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { storage } from '../firebase';
+import { render } from "react-dom"; 
 
-const ReactFirebaseFileUpload = () => {
+const FirebaseUpload = () => { // custom hook created
   const [image, setImage] = useState(null); // variable stored if file
   const [url, setUrl] = useState(""); // url variable stores url of image after uploading
   const [progress, setProgress] = useState(0);
@@ -13,7 +14,7 @@ const ReactFirebaseFileUpload = () => {
   };
 
   const handleUpload = () => { // upload button
-    const uploadTask = storage.ref(`images/${image.name}`).put(image); // create firebase images folder
+    const uploadTask = storage.ref(`images/postimages/${image.name}`).put(image); // create firebase images folder
     uploadTask.on (
       "state_changed",
       snapshot => { // current progress of upload
@@ -27,7 +28,7 @@ const ReactFirebaseFileUpload = () => {
       },
       () => {
         storage
-          .ref("images")
+          .ref("images/postimages")
           .child(image.name) 
           .getDownloadURL()
           .then(url => {
@@ -37,19 +38,28 @@ const ReactFirebaseFileUpload = () => {
     )
   }; 
 
-    return (
-        <div>
-            <progress value={progress} max="100" />
-            <br/>
-            <br/>
-            <input type="file" onChange={handleChange} />
-            <button onClick={handleUpload}>Upload</button>
-            <br />
-            <br/>
-            <img src={url || "http://via.placeholder.come/300x400"} alt="firebase-image" />
-        </div>
-    );
-};
+  return ( // frontend part
+    <div>
+        <progress value={progress} max="100" />
+        <br/>
+        <br/>
+        <input type="file" onChange={handleChange} />
+        <button onClick={handleUpload}>Upload</button>
+        <br/>
+        <br/>
+        <img src={url || "http://via.placeholder.com/300x400"} alt="firebase-image" />
+    </div>
+  );
+}
+
+/* input type="file" is the button that is pressed to select a file
+ * that line calls the handleChange() function
+ * button upload handles the upload part
+ * handleUpload() is the function that is called when button pressed 
+ * placeholder image just there until picture uploaded
+ * picture is stored in url variable
+ */
 
 
-export default ReactFirebaseFileUpload;
+render (<FirebaseUpload />, document.querySelector("#root"));
+export {FirebaseUpload};

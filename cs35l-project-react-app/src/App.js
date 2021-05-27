@@ -1,20 +1,14 @@
 import { Post, PostCreator } from './components/posts.js';
 import { SignIn } from './components/auth.js';
-/* below is a demo of the Post and PostCreator components. For demo purposes,
- * I passed in a static postId and currentUserId of a preexisting post and user
- * for the Post component, and the userId of a preexisting user for the PostCreator
- * component. Check out components/posts for more information. 
- * */
+import Routes from './routes';
 
 const App = () => {
     return (
-        <div>
-        {/*<PostCreator onPostCreate={(postId) => console.log("Post created", postId)} currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  />         <Post postId="-Ma_8hv3-wFTqCjCHw3U" currentUserId="aTSKynFlfWP1AGWkjdGsndlgIXi2"  /> */}
-        <SignIn onSignIn={() => console.log('bruh')} />
-
+        <div className="App">
+            <header className="App-header">Sample Header</header>
+            <Routes />
         </div>
     );
 };
-
 
 export default App;
