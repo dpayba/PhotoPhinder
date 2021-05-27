@@ -13,8 +13,9 @@ class Frontpage extends Component
         return(
         <div>
             <header>Welcome To *insert app title here*</header>
-            <Link to="/posts">Posts</Link>,
-            <Link to="/my-profile">Your Profile</Link>
+            <Link className="App" to="/feed">Browse Photos</Link>,
+            <Link className="App" to="/my-profile">Your Profile</Link>
+            <footer>*insert Copyright + Our Names*</footer>
         </div>
         );
     }
@@ -22,4 +23,6 @@ class Frontpage extends Component
 }
 
 export default Frontpage;
+
+//add links as needed --Rowan
 
