@@ -11,6 +11,7 @@
 3. Run essential npm commands
     - ```npm install``` (installs dependencies listed in package.json)
         - ```npm install --save firebase```
+        - ```npm install --save react-router-dom```
     - ```npm start```
 
 When adding a new node package to the project, make sure to install the package with the --save option (e.g. ```npm install --save NEWPACKAGE```). This will allow other contributors to simply run ```npm install``` next time they merge your changes, without having to install each package and its correct version one-by-one.
