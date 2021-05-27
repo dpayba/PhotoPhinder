@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "cs35l-project-react-app": "file:cs35l-project-react-app"
   }
 }
