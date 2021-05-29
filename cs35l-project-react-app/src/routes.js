@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import App from './App';
 import Frontpage from './frontpage';
 import { Feed, PostCreator } from './components/posts.js';
 import { SignIn } from './components/auth.js';

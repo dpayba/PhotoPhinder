@@ -11,11 +11,13 @@ class Frontpage extends Component
     render()
     {
         return(
-        <div>
+        <div id="page-container">
             <header className="App-header">Welcome To *insert app title here*</header>
-            <Link className="App" to="/feed">Browse Photos</Link>,
+            <p></p>
+            <Link className="App" to="/feed">Browse Photos</Link>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <Link className="App" to="/my-profile">Your Profile</Link>
-            <footer>*insert Copyright + Our Names*</footer>
+            <footer className="App-footer">*insert Copyright + Our Names*&nbsp;&nbsp;&nbsp;&nbsp;</footer>
         </div>
         );
     }
