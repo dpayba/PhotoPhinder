@@ -9,7 +9,8 @@
 1. Start by cloning repository
 2. Change directory to **cs35l-project-react-app**
 3. Run essential npm commands
-    - ```npm install``` (installs dependencies listed in package.json)
+    - ```npm install``` (installs all dependencies listed in package.json)
+        - To install packages individually:
         - ```npm install --save firebase```
         - ```npm install --save react-router-dom```
     - ```npm start```
