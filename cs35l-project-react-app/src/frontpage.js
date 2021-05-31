@@ -17,6 +17,8 @@ class Frontpage extends Component
             <Link className="App" to="/feed">Browse Photos</Link>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <Link className="App" to="/my-profile">Your Profile</Link>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <Link className="App" to="/login">Sign In or Sign Up</Link> 
             <footer className="App-footer">*insert Copyright + Our Names*&nbsp;&nbsp;&nbsp;&nbsp;</footer>
         </div>
         );

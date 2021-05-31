@@ -2,6 +2,7 @@ import { firebase } from '../firebase';
 import db from '../firebase';
 import { Link } from 'react-router-dom';
 import React from 'react';
+import '../App.css'
 
 /*
  * Simple implementation of sign in and sign up component,
@@ -62,40 +63,39 @@ class SignIn extends React.Component {
 
     render() {
         return (
-            <div>
-                <label>
-                    Email:
-                    <input
-                        type="text"
-                        value={this.state.email}
-                        onChange={this.handleEmailInput}
-                    />
-                </label>
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        value={this.state.password}
-                        onChange={this.handlePasswordInput}
-                    />
-                </label>
-                <button
+            <div className="signin"> 
+            <form action="">
+            <h1>Sign in</h1>
+            <input 
+                type="email"
+                placeholder="Email"
+                value={this.state.email}
+                onChange={this.handleEmailInput}
+            />
+            <input 
+                type="password"
+                placeholder="Password"
+                value={this.state.password}
+                onChange={this.handlePasswordInput}
+            />
+            <button
                     onClick={() => {
                         this.submit();
                     }}
                 >
                     Sign In
-                </button>
-                <br />
-                <button
+            </button>
+            <h6>Not yet registered? </h6>
+            <button
                     onClick={() => {
                         this.props.history.push('/signup');
                     }}
                 >
                     Sign Up
-                </button>
+            </button>
+            </form>
             </div>
-        );
+        )
     }
 }
 
