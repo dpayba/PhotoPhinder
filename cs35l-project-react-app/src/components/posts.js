@@ -1,16 +1,61 @@
 import React from 'react';
 import { firebase, storage } from '../firebase';
 import db from '../firebase';
+import {
+    Card,
+    Media,
+    Heading,
+    Content,
+    Button,
+    Columns,
+    Navbar,
+} from 'react-bulma-components';
 
 class Post extends React.Component {
     render() {
         return (
+            <div>
+                <Card>
+                    <Card.Image
+                    size="4by3"
+                    src={this.props.imgUrl}
+                    alt="Post Image"
+                    />
+                    <Card.Content>
+                        <Media.Item>
+                            <Heading size={4}>{this.props.creatorUsername}</Heading>
+                        </Media.Item>
+
+                        <Content>
+                            <p>likes: {Object.keys(this.props.likes).length}</p>
+                            <Columns centered>
+                                <Columns.Column size="half">
+                                        <Button
+                                        onClick={() => this.props.addCurrentUserLike()}
+                                        >
+                                            Like
+                                        </Button>
+                                </Columns.Column>
+                                <Columns.Column size="half">
+                                        <Button
+                                        onClick={() => this.props.removeCurrentUserLike()}
+                                        >
+                                            Unlike 
+                                        </Button>
+
+                                </Columns.Column>
+                            </Columns>
+                        </Content>
+                    </Card.Content>
+                </Card>
+
+            {/*
             <div className="post">
                 {/* styling and formatting of this
                     can be redone. what's shown
                     below is for demo purposes.
                     Current styling is in the post
-                    class in App.css */}
+                    class in App.css }
                 <p>{this.props.creatorUsername}</p>
                 <img
                     width="500"
@@ -20,7 +65,7 @@ class Post extends React.Component {
                 />
                 {/* ^^I wasn't able to figure out how
                     to make the image a fixed size
-                    without stretching */}
+                    without stretching }
                 <p>likes: {Object.keys(this.props.likes).length}</p>
                 <p>currentUserHasLiked: {String(this.props.currentUserHasLiked)}</p>
                 <button onClick={() => this.props.addCurrentUserLike()}>
@@ -29,6 +74,8 @@ class Post extends React.Component {
                 <button onClick={() => this.props.removeCurrentUserLike()}>
                     Unlike
                 </button>
+            </div>
+                */}
             </div>
         );
     }
@@ -41,6 +88,7 @@ class Feed extends React.Component {
         this.state = {
             posts: [],
             loading: true,
+            postIndex: 0,
         };
     }
 
@@ -230,6 +278,26 @@ class Feed extends React.Component {
             });
     }
 
+    clickLeft() {
+        if (this.state.postIndex == 0) {
+            return;
+        } else {
+            this.setState({
+                postIndex: this.state.postIndex - 1,
+            });
+        }
+    }
+
+    clickRight() {
+        if (this.state.postIndex == this.state.posts.length - 1) {
+            return;
+        } else {
+            this.setState({
+                postIndex: this.state.postIndex + 1,
+            })
+        }
+    }
+
     render() {
         const posts = this.state.posts.map((postData) => (
             <Post
@@ -245,10 +313,67 @@ class Feed extends React.Component {
 
         return (
             <div>
+              <Navbar>
+                    <Navbar.Brand>
+                        <Navbar.Item href="#">
+                            AppName
+                        </Navbar.Item>
+                    </Navbar.Brand>
+                    
+                    <Navbar.Menu>
+                        <Navbar.Container>
+                            <Navbar.Item href="#">
+                                Feed
+                            </Navbar.Item>
+
+                            <Navbar.Item href="#">
+                                My Profile
+                            </Navbar.Item>
+
+                            <Navbar.Item href="#">
+                                Something idk
+                            </Navbar.Item>
+                        </Navbar.Container>
+
+                        <Navbar.Container align="end">
+                            <Navbar.Item href ="#">
+                                Login/Signup/Logout
+                            </Navbar.Item>
+                        </Navbar.Container>
+                    </Navbar.Menu>
+                </Navbar>
+
                 <p>Loading: {String(this.state.loading)}</p>
+
+                <Heading>
+                    <Columns centered>
+                        <Columns.Column>
+                            Profiles
+                        </Columns.Column>
+                    </Columns>
+                </Heading>
                 
                 {/* edit App.css class feed to modify the styling of the feed */}
-                <div className="feed"> {posts} </div>
+
+                <Columns centered>
+                    <Columns.Column>
+                        <Button
+                        onClick={() => this.clickLeft()}
+                        >Left</Button>
+                    </Columns.Column>
+
+                    <Columns.Column>
+                        {posts[this.state.postIndex]}
+                    </Columns.Column>
+
+                    <Columns.Column>
+                        <Button
+                        onClick={() => this.clickRight()}
+                        >Right</Button>
+                    </Columns.Column>
+                </Columns>
+
+                {/* <div className="feed"> {posts} </div> */}
             </div>
         );
     }
