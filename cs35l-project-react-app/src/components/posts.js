@@ -330,6 +330,10 @@ class Feed extends React.Component {
                             <Navbar.Item href="#">
                                 <Link className="button is-primary" to="/profile">My Profile</Link>
                             </Navbar.Item>
+
+                            <Navbar.Item href="#">
+                                <Link className="button is-primary" to="/upload">Upload</Link>
+                            </Navbar.Item>
                         </Navbar.Container>
 
                         <Navbar.Container align="end">
