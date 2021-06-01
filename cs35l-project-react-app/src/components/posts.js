@@ -10,6 +10,7 @@ import {
     Columns,
     Navbar,
 } from 'react-bulma-components';
+import { Link } from 'react-router-dom';
 
 class Post extends React.Component {
     render() {
@@ -313,31 +314,27 @@ class Feed extends React.Component {
 
         return (
             <div>
-              <Navbar>
+                <Navbar>
                     <Navbar.Brand>
                         <Navbar.Item href="#">
-                            AppName
+                            <Link class="button is-primary" to="/">About Us</Link>
                         </Navbar.Item>
                     </Navbar.Brand>
                     
                     <Navbar.Menu>
                         <Navbar.Container>
                             <Navbar.Item href="#">
-                                Feed
+                                <Link className="button is-primary" to="/feed">Browse Photos</Link>
                             </Navbar.Item>
 
                             <Navbar.Item href="#">
-                                My Profile
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                Something idk
+                                <Link className="button is-primary" to="/my-profile">My Profile</Link>
                             </Navbar.Item>
                         </Navbar.Container>
 
                         <Navbar.Container align="end">
                             <Navbar.Item href ="#">
-                                Login/Signup/Logout
+                                <Link className="button is-primary" to="/login">Login/Signup/Logout</Link>
                             </Navbar.Item>
                         </Navbar.Container>
                     </Navbar.Menu>
