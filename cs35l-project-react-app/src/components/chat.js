@@ -53,5 +53,11 @@ class Chat extends React.Component {
             </div>
         );
     }
+
+    handleChange(event) {
+        this.setState({
+            content: event.target.value
+        });
+    }
 }
 
