@@ -291,7 +291,7 @@ class Feed extends React.Component {
     }
 
     clickRight() {
-        if (this.state.postIndex == this.state.posts.length) {
+        if (this.state.postIndex == this.state.posts.length - 1) {
             return;
         } else {
             this.setState({
