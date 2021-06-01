@@ -1,8 +1,17 @@
 import { firebase } from '../firebase';
 import db from '../firebase';
+import 'bulma/css/bulma.min.css';
+import {
+    Button,
+    Form,
+    Columns,
+    Card,
+    Navbar,
+    Box,
+    Heading,
+} from 'react-bulma-components';
 import { Link } from 'react-router-dom';
 import React from 'react';
-import '../App.css'
 
 /*
  * Simple implementation of sign in and sign up component,
@@ -63,37 +72,115 @@ class SignIn extends React.Component {
 
     render() {
         return (
-            <div className="signin"> 
-            <form action="">
-            <h1>Sign in</h1>
-            <input 
-                type="email"
-                placeholder="Email"
-                value={this.state.email}
-                onChange={this.handleEmailInput}
-            />
-            <input 
-                type="password"
-                placeholder="Password"
-                value={this.state.password}
-                onChange={this.handlePasswordInput}
-            />
-            <button
-                    onClick={() => {
-                        this.submit();
-                    }}
-                >
-                    Sign In
-            </button>
-            <h6>Not yet registered? </h6>
-            <button
-                    onClick={() => {
-                        this.props.history.push('/signup');
-                    }}
-                >
-                    Sign Up
-            </button>
-            </form>
+            <div> 
+                <Navbar>
+                    <Navbar.Brand>
+                        <Navbar.Item href="#">
+                            AppName
+                        </Navbar.Item>
+                    </Navbar.Brand>
+
+                    <Navbar.Menu>
+                        <Navbar.Container>
+                            <Navbar.Item href="#">
+                                Feed
+                            </Navbar.Item>
+
+                            <Navbar.Item href="#">
+                                My Profile
+                            </Navbar.Item>
+
+                            <Navbar.Item href="#">
+                                Something idk
+                            </Navbar.Item>
+                        </Navbar.Container>
+
+                        <Navbar.Container align="end">
+                            <Navbar.Item href ="#">
+                                Login/Signup/Logout
+                            </Navbar.Item>
+                        </Navbar.Container>
+                    </Navbar.Menu>
+
+                </Navbar>
+
+                <Box style={{ width: 800, margin: 'auto' }}>
+
+                <Heading>
+                <Columns centered>
+                    <Columns.Column>
+                        Sign In
+                    </Columns.Column>
+                </Columns>
+
+                </Heading>
+
+                <Columns centered>
+                    <Columns.Column size="half">
+                        <Form.Field>
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control>
+                                <Form.Input
+                                placeholder="example@email.com"
+                                color="success"
+                                value={this.state.email}
+                                onChange={this.handleEmailInput}
+                                />
+                            </Form.Control>
+                            </Form.Field> 
+                    </Columns.Column>
+
+                </Columns>
+
+                <Columns centered>
+                    <Columns.Column size="half">
+                        <Form.Field>
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control>
+                                <Form.Input
+                                placeholder="Password"
+                                type="password"
+                                color="success"
+                                value={this.state.password}
+                                onChange={this.handlePasswordInput}
+                                />
+                            </Form.Control>
+                            </Form.Field> 
+                    </Columns.Column>               
+                </Columns>
+
+                <Columns centered>
+                    <Columns.Column size="half">
+                        <Button.Group>
+                            <Button 
+                            fullwidth
+                            rounded 
+                            color="primary"
+                            onClick={() => this.submit()}
+                            >
+                                Submit
+                            </Button>
+                        </Button.Group>
+                    </Columns.Column>
+                </Columns>
+
+                <Columns centered>
+                    <Columns.Column size="half">
+                        <Button.Group>
+                            <Button 
+                            fullwidth
+                            rounded 
+                            color="secondary"
+                            onClick={() => { this.props.history.push('/signup'); } }
+                            >
+                                Sign Up instead
+                            </Button>
+                        </Button.Group>
+                    </Columns.Column>
+                </Columns>
+
+                </Box>
+            
             </div>
         )
     }

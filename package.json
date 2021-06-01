@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "axios": "^0.21.1",
-    "cs35l-project-react-app": "file:cs35l-project-react-app"
+    "cs35l-project-react-app": "file:cs35l-project-react-app",
+    "firebase": "^8.6.3",
+    "react-router-dom": "^5.2.0"
   }
 }
