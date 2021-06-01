@@ -31,5 +31,27 @@ class Chat extends React.Component {
             this.setState({ readError: error.message });
         }
     }
+
+    render() {
+        return (
+            <div>
+                <div className="chats">
+                    {this.state.chats.map(chat => {
+                        return <p key={chat.timestamp}>{chat.content}</p>
+                    })}
+                </div>
+
+                <form onSubmit={this.handleSubmit}>
+                    <input onChange={this.handleChange} value={this.state.content}></input>
+                    {this.state.error ? <p>{this.state.writeError}</p> : null}
+                    <button type="submit">Send</button>
+                </form>
+
+                <div>
+                    Login in as: <strong>{this.state.user.email}</strong>
+                </div>
+            </div>
+        );
+    }
 }
 
