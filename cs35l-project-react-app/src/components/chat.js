@@ -41,8 +41,8 @@ class Chat extends React.Component {
                     })}
                 </div>
 
-                <form onSubmit={this.handleSubmit}>
-                    <input onChange={this.handleChange} value={this.state.content}></input>
+                <form onSubmit={this.handleSend}>
+                    <input onChange={this.handleDelta} value={this.state.content}></input>
                     {this.state.error ? <p>{this.state.writeError}</p> : null}
                     <button type="submit">Send</button>
                 </form>
