@@ -15,9 +15,7 @@ class Post extends React.Component {
     render() {
         return (
             <div>
- 
-
-                <Card style={{ width: 300, margin: 'auto' }}>
+                <Card>
                     <Card.Image
                     size="4by3"
                     src={this.props.imgUrl}
