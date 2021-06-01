@@ -24,14 +24,14 @@ class Frontpage extends Component
             <Navbar>
                     <Navbar.Brand>
                         <Navbar.Item href="#">
-                            <Link class="button is-primary" to="/feed">Browse Photos</Link>
+                            <Link class="button is-primary" to="/">About Us</Link>
                         </Navbar.Item>
                     </Navbar.Brand>
                     
                     <Navbar.Menu>
                         <Navbar.Container>
                             <Navbar.Item href="#">
-                                <Link className="button is-primary" to="/my-profile">Feed</Link>
+                                <Link className="button is-primary" to="/feed">Browse Photos</Link>
                             </Navbar.Item>
 
                             <Navbar.Item href="#">
@@ -41,7 +41,7 @@ class Frontpage extends Component
 
                         <Navbar.Container align="end">
                             <Navbar.Item href ="#">
-                                <Link className="button is-primary" to="/my-profile">Login/Signup/Logout</Link>
+                                <Link className="button is-primary" to="/login">Login/Signup/Logout</Link>
                             </Navbar.Item>
                         </Navbar.Container>
                     </Navbar.Menu>
