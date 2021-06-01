@@ -13,7 +13,7 @@ class Chat extends React.Component {
             writeError: null
         };
 
-        this.handleChange = this.hangleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 

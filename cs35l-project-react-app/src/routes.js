@@ -6,7 +6,6 @@ import { SignIn } from './components/auth.js';
 import { SignUp } from './components/auth.js';
 import Profile from './components/profile.js';
 import { firebase } from './firebase';
-import { Chat } from './components/chat.js';
 
 function PrivateRoute({ component: Component, authed, ...rest }) {
     /* only users who are authenticated can visit this kind of route */
@@ -38,7 +37,6 @@ const Routes = () => {
             <Route exact path="/" component={Frontpage}></Route>
             <Route path="/login" component={SignIn} />
             <Route path="/signup" component={SignUp} />
-            <Routh path="/chat" component={Chat} />
             <PrivateRoute path="/upload" component={PostCreator} />
             <PrivateRoute path="/feed" component={Feed} />
             <PrivateRoute path="/profile" component={Profile} />
