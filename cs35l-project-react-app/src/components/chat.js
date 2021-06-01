@@ -1,7 +1,6 @@
 import React from 'react';
-import { storage } from '../firebase';
+import { auth } from '../firebase';
 import db from '../firebase';
-import App from '../App';
 
 class Chat extends React.Component {
     constructor(props) {
@@ -30,49 +29,6 @@ class Chat extends React.Component {
             });
         } catch (error) {
             this.setState({ readError: error.message });
-        }
-    }
-
-    render() {
-        return (
-            <div>
-                <div className="chats">
-                    {this.state.chats.map(chat => {
-                        return <p key={chat.timestamp}>{chat.content}</p>
-                    })}
-                </div>
-
-                <form onSubmit={this.handleSubmit}>
-                    <input onChange={this.handleChange} value={this.state.content}></input>
-                    {this.state.error ? <p>{this.state.writeError}</p> : null}
-                    <button type="submit">Send</button>
-                </form>
-
-                <div>
-                    Login in as: <strong>{this.state.user.email}</strong>
-                </div>
-            </div>
-        );
-    }
-
-    handleChange(event) {
-        this.setState({
-            content: event.target.value
-        });
-    }
-
-    async handleSubmit(event) {
-        event.preventDefault();
-        this.setState({ writeError: null });
-        try {
-            await db.ref("chats").push({
-                content: this.state.content,
-                timestamp: Date.now(),
-                uid: this.state.user.uid
-            });
-            this.setState({ content: '' });
-        } catch (error) {
-            this.setState({ writeError: error.message });
         }
     }
 }
