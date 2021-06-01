@@ -240,39 +240,128 @@ class SignUp extends React.Component {
     render() {
         return (
             <div>
-                <label>
-                    Email:
-                    <input
-                        type="text"
-                        value={this.state.email}
-                        onChange={this.handleEmailInput}
-                    />
-                </label>
-                <label>
-                    Username:
-                    <input
-                        type="text"
-                        value={this.state.username}
-                        onChange={this.handleUsernameInput}
-                    />
-                </label>
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        value={this.state.password}
-                        onChange={this.handlePasswordInput}
-                    />
-                </label>
-                <button onClick={() => this.submit()}>Sign Up</button>
-                <br />
-                <button
-                    onClick={() => {
-                        this.props.history.push('/login');
-                    }}
-                >
-                    Back To Login
-                </button>
+                <Navbar>
+                    <Navbar.Brand>
+                        <Navbar.Item href="#">
+                            AppName
+                        </Navbar.Item>
+                    </Navbar.Brand>
+                    
+                    <Navbar.Menu>
+                        <Navbar.Container>
+                            <Navbar.Item href="#">
+                                Feed
+                            </Navbar.Item>
+
+                            <Navbar.Item href="#">
+                                My Profile
+                            </Navbar.Item>
+
+                            <Navbar.Item href="#">
+                                Something idk
+                            </Navbar.Item>
+                        </Navbar.Container>
+
+                        <Navbar.Container align="end">
+                            <Navbar.Item href ="#">
+                                Login/Signup/Logout
+                            </Navbar.Item>
+                        </Navbar.Container>
+                    </Navbar.Menu>
+
+                </Navbar>
+
+                <Box style={{ width: 800, margin: 'auto' }}>
+                
+                <Heading>
+                <Columns centered>
+                    <Columns.Column>
+                        Signing up has never been easier.
+                    </Columns.Column>
+                </Columns>
+
+                </Heading>
+
+                <Columns centered>
+                    <Columns.Column size="half">
+                        <Form.Field>
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control>
+                                <Form.Input
+                                placeholder="example@email.com"
+                                color="success"
+                                value={this.state.email}
+                                onChange={this.handleEmailInput}
+                                />
+                            </Form.Control>
+                            </Form.Field> 
+                    </Columns.Column>
+
+                </Columns>
+
+                <Columns centered>
+                    <Columns.Column size="half">
+                        <Form.Field>
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control>
+                                <Form.Input
+                                placeholder="Username"
+                                color="success"
+                                value={this.state.username}
+                                onChange={this.handleUsernameInput}
+                                />
+                            </Form.Control>
+                            </Form.Field> 
+                    </Columns.Column> </Columns>
+
+                <Columns centered>
+                    <Columns.Column size="half">
+                        <Form.Field>
+                            <Form.Label>Password</Form.Label>
+                            <Form.Control>
+                                <Form.Input
+                                placeholder="Password"
+                                type="password"
+                                color="success"
+                                value={this.state.password}
+                                onChange={this.handlePasswordInput}
+                                />
+                            </Form.Control>
+                            </Form.Field> 
+                    </Columns.Column>               
+                </Columns>
+
+                <Columns centered>
+                    <Columns.Column size="half">
+                        <Button.Group>
+                            <Button 
+                            fullwidth
+                            rounded 
+                            color="primary"
+                            onClick={() => this.submit()}
+                            >
+                                Sign Up
+                            </Button>
+                        </Button.Group>
+                    </Columns.Column>
+                </Columns>
+
+                <Columns centered>
+                    <Columns.Column size="half">
+                        <Button.Group>
+                            <Button 
+                            fullwidth
+                            rounded 
+                            color="secondary"
+                            onClick={() => { this.props.history.push('/login'); } }
+                            >
+                                Login instead
+                            </Button>
+                        </Button.Group>
+                    </Columns.Column>
+                </Columns>
+
+                </Box>
             </div>
         );
     }
