@@ -90,6 +90,7 @@ class Feed extends React.Component {
         this.state = {
             posts: [],
             loading: true,
+            postIndex: 0,
         };
     }
 
@@ -279,6 +280,26 @@ class Feed extends React.Component {
             });
     }
 
+    clickLeft() {
+        if (this.state.postIndex == 0) {
+            return;
+        } else {
+            this.setState({
+                postIndex: this.state.postIndex - 1,
+            });
+        }
+    }
+
+    clickRight() {
+        if (this.state.postIndex == this.state.posts.length) {
+            return;
+        } else {
+            this.setState({
+                postIndex: this.state.postIndex + 1,
+            })
+        }
+    }
+
     render() {
         const posts = this.state.posts.map((postData) => (
             <Post
@@ -335,7 +356,26 @@ class Feed extends React.Component {
                 </Heading>
                 
                 {/* edit App.css class feed to modify the styling of the feed */}
-                <div className="feed"> {posts} </div>
+
+                <Columns centered>
+                    <Columns.Column>
+                        <Button
+                        onClick={() => this.clickLeft()}
+                        >Left</Button>
+                    </Columns.Column>
+
+                    <Columns.Column>
+                        {posts[this.state.postIndex]}
+                    </Columns.Column>
+
+                    <Columns.Column>
+                        <Button
+                        onClick={() => this.clickRight()}
+                        >Right</Button>
+                    </Columns.Column>
+                </Columns>
+
+                {/* <div className="feed"> {posts} </div> */}
             </div>
         );
     }
