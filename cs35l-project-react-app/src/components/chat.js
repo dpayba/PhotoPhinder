@@ -59,5 +59,20 @@ class Chat extends React.Component {
             content: event.target.value
         });
     }
+
+    async handleSubmit(event) {
+        event.preventDefault();
+        this.setState({ writeError: null });
+        try {
+            await db.ref("chats").push({
+                content: this.state.content,
+                timestamp: Date.now(),
+                uid: this.state.user.uid
+            });
+            this.setState({ content: '' });
+        } catch (error) {
+            this.setState({ writeError: error.message });
+        }
+    }
 }
 
