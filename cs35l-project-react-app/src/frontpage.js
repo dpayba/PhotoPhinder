@@ -21,11 +21,42 @@ class Frontpage extends Component
     {
         return(
         <div id="page-container">
-            <header className="App-header">Welcome To *insert app title here*</header>
+            <Navbar>
+                    <Navbar.Brand>
+                        <Navbar.Item href="#">
+                            <Link class="button is-primary" to="/feed">Browse Photos</Link>
+                        </Navbar.Item>
+                    </Navbar.Brand>
+                    
+                    <Navbar.Menu>
+                        <Navbar.Container>
+                            <Navbar.Item href="#">
+                                <Link className="button is-primary" to="/my-profile">Feed</Link>
+                            </Navbar.Item>
+
+                            <Navbar.Item href="#">
+                                <Link className="button is-primary" to="/my-profile">My Profile</Link>
+                            </Navbar.Item>
+                        </Navbar.Container>
+
+                        <Navbar.Container align="end">
+                            <Navbar.Item href ="#">
+                                <Link className="button is-primary" to="/my-profile">Login/Signup/Logout</Link>
+                            </Navbar.Item>
+                        </Navbar.Container>
+                    </Navbar.Menu>
+
+                </Navbar>
             <p>&nbsp;</p>
-            <Link class="button is-primary" to="/feed">Browse Photos</Link>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <Link className="button is-primary" to="/my-profile">Your Profile</Link>
+            <p>&nbsp;</p>
+            <Heading>
+                <Columns centered>
+                    <Columns.Column>
+                        Welcome to *insert app name here*
+                    </Columns.Column>
+                </Columns>
+            </Heading>
+            <p>&nbsp;</p>
             <footer className="App-footer">*insert Copyright + Our Names*&nbsp;&nbsp;&nbsp;&nbsp;</footer>
         </div>
         );
