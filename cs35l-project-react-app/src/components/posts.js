@@ -2,6 +2,7 @@ import React from 'react';
 import { firebase, storage } from '../firebase';
 import db from '../firebase';
 import {
+    Box,
     Card,
     Media,
     Heading,
@@ -16,6 +17,9 @@ import {
     faCaretLeft,
     faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import CustomNavbar from "./navbar.js";
+
 
 class Post extends React.Component {
     render() {
@@ -71,34 +75,6 @@ class Post extends React.Component {
                         </Content>
                     </Card.Content>
                 </Card>
-
-                {/*
-            <div className="post">
-                {/* styling and formatting of this
-                    can be redone. what's shown
-                    below is for demo purposes.
-                    Current styling is in the post
-                    class in App.css }
-                <p>{this.props.creatorUsername}</p>
-                <img
-                    width="500"
-                    height="450"
-                    src={this.props.imgUrl}
-                    alt="Post Image"
-                />
-                {/* ^^I wasn't able to figure out how
-                    to make the image a fixed size
-                    without stretching }
-                <p>likes: {Object.keys(this.props.likes).length}</p>
-                <p>currentUserHasLiked: {String(this.props.currentUserHasLiked)}</p>
-                <button onClick={() => this.props.addCurrentUserLike()}>
-                    Like
-                </button>
-                <button onClick={() => this.props.removeCurrentUserLike()}>
-                    Unlike
-                </button>
-            </div>
-                */}
             </div>
         );
     }
@@ -353,8 +329,6 @@ class Feed extends React.Component {
                         </Button>
                     </Columns.Column>
                 </Columns>
-
-                {/* <div className="feed"> {posts} </div> */}
             </div>
         );
     }
@@ -364,27 +338,7 @@ class MainFeed extends React.Component {
     render() {
         return (
             <div>
-                <Navbar>
-                    <Navbar.Brand>
-                        <Navbar.Item href="#">AppName</Navbar.Item>
-                    </Navbar.Brand>
-
-                    <Navbar.Menu>
-                        <Navbar.Container>
-                            <Navbar.Item href="#">Feed</Navbar.Item>
-
-                            <Navbar.Item href="#">My Profile</Navbar.Item>
-
-                            <Navbar.Item href="#">Something idk</Navbar.Item>
-                        </Navbar.Container>
-
-                        <Navbar.Container align="end">
-                            <Navbar.Item href="#">
-                                Login/Signup/Logout
-                            </Navbar.Item>
-                        </Navbar.Container>
-                    </Navbar.Menu>
-                </Navbar>
+                <CustomNavbar />
                 <div>
                     Main Feed:
                     <Feed />
@@ -438,29 +392,39 @@ class PostCreator extends React.Component {
     render() {
         return (
             <div>
-                {/* styling and formatting of this
-                    can be redone. what's shown
-                    below is for demo purposes */}
+                <CustomNavbar />
 
-                {/* please feel free to remove the buttons once a better form of navigation
-                    has been established */}
-                <div style={{ marginBottom: '2rem' }}>
-                    <button onClick={() => this.props.history.push('/feed')}>
-                        Goto feed
-                    </button>
-                    <button onClick={() => this.props.history.push('/profile')}>
-                        Goto profile
-                    </button>
-                    <button onClick={() => this.props.history.push('/login')}>
-                        Goto login
-                    </button>
-                    <button onClick={() => this.props.history.push('/signup')}>
-                        Goto signup
-                    </button>
-                </div>
-                <input type="file" onChange={(e) => this.handleFileInput(e)} />
-                <br />
-                <button onClick={() => this.createPost()}>Post</button>
+                <Box style={{ width: 800, margin: 'auto' }}>
+                    <Heading>
+                    <Columns centered>
+                        <Columns.Column>
+                            Upload a Photo
+                        </Columns.Column>
+                    </Columns>
+
+                    </Heading>
+
+                    <Columns centered>
+                        <Columns.Column size="half">
+                            <input type="file" onChange={(e) => this.handleFileInput(e)} />
+                        </Columns.Column>
+                    </Columns>
+
+                    <Columns centered>
+                        <Columns.Column size="half">
+                        <Button.Group>
+                            <Button className="is-info"
+                            fullwidth
+                            rounded 
+                            color="primary"
+                            onClick={() => this.createPost()}
+                            >
+                                Post
+                            </Button>
+                        </Button.Group>
+                        </Columns.Column>
+                    </Columns>
+                </Box>            
             </div>
         );
     }

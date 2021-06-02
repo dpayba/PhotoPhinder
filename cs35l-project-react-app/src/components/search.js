@@ -12,6 +12,7 @@ import {
     Navbar,
 } from 'react-bulma-components';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import CustomNavbar from "./navbar.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -166,27 +167,7 @@ class SearchForUser extends React.Component {
 
         return (
             <div>
-                <Navbar>
-                    <Navbar.Brand>
-                        <Navbar.Item href="#">AppName</Navbar.Item>
-                    </Navbar.Brand>
-
-                    <Navbar.Menu>
-                        <Navbar.Container>
-                            <Navbar.Item href="#">Feed</Navbar.Item>
-
-                            <Navbar.Item href="#">My Profile</Navbar.Item>
-
-                            <Navbar.Item href="#">Something idk</Navbar.Item>
-                        </Navbar.Container>
-
-                        <Navbar.Container align="end">
-                            <Navbar.Item href="#">
-                                Login/Signup/Logout
-                            </Navbar.Item>
-                        </Navbar.Container>
-                    </Navbar.Menu>
-                </Navbar>
+                <CustomNavbar />
 
                 <Columns centered>
                     <Columns.Column className="mx-5">

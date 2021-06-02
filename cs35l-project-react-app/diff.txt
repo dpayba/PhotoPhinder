@@ -1,0 +1,559 @@
+diff --git a/cs35l-project-react-app/src/App.css b/cs35l-project-react-app/src/App.css
+index 05b89bb..5964cbe 100644
+--- a/cs35l-project-react-app/src/App.css
++++ b/cs35l-project-react-app/src/App.css
+@@ -19,6 +19,14 @@
+     margin: auto;
+ }
+ 
++.search-result {
++    cursor: pointer;
++}
++
++.search-result:hover {
++    background-color: #e6e6e6;
++}
++
+ .App-header
+ {
+   text-align: center;
+diff --git a/cs35l-project-react-app/src/components/posts.js b/cs35l-project-react-app/src/components/posts.js
+index 22e9fcc..ff33470 100644
+--- a/cs35l-project-react-app/src/components/posts.js
++++ b/cs35l-project-react-app/src/components/posts.js
+@@ -17,22 +17,33 @@ import {
+     faThumbsUp,
+ } from '@fortawesome/free-solid-svg-icons';
+ 
+-
+ class Post extends React.Component {
+     render() {
+         var likeButton;
+         if (this.props.currentUserHasLiked) {
+             likeButton = (
+-                <Button className="has-text-danger" onClick={() => this.props.removeCurrentUserLike()}>
+-                    <FontAwesomeIcon style={{ paddingRight: "4px" }} icon={faThumbsUp} /> Like
++                <Button
++                    className="has-text-danger"
++                    onClick={() => this.props.removeCurrentUserLike()}
++                >
++                    <FontAwesomeIcon
++                        style={{ paddingRight: '4px' }}
++                        icon={faThumbsUp}
++                    />{' '}
++                    Like
+                 </Button>
+             );
+-        }
+-
+-        else {
++        } else {
+             likeButton = (
+-                <Button className="has-text-grey" onClick={() => this.props.addCurrentUserLike()}>
+-                    <FontAwesomeIcon style={{ paddingRight: "4px" }} icon={faThumbsUp} /> Like
++                <Button
++                    className="has-text-grey"
++                    onClick={() => this.props.addCurrentUserLike()}
++                >
++                    <FontAwesomeIcon
++                        style={{ paddingRight: '4px' }}
++                        icon={faThumbsUp}
++                    />{' '}
++                    Like
+                 </Button>
+             );
+         }
+@@ -55,9 +66,7 @@ class Post extends React.Component {
+                         <Content>
+                             <p>likes: {Object.keys(this.props.likes).length}</p>
+                             <Columns centered>
+-                                <Columns.Column>
+-                                    {likeButton}
+-                                </Columns.Column>
++                                <Columns.Column>{likeButton}</Columns.Column>
+                             </Columns>
+                         </Content>
+                     </Card.Content>
+@@ -325,6 +334,34 @@ class Feed extends React.Component {
+             />
+         ));
+ 
++        return (
++            <div>
++                <Columns centered className="is-vcentered">
++                    <Columns.Column>
++                        <Button onClick={() => this.clickLeft()}>
++                            <FontAwesomeIcon icon={faCaretLeft} size="lg" />
++                        </Button>
++                    </Columns.Column>
++
++                    <Columns.Column>
++                        {posts[this.state.postIndex]}
++                    </Columns.Column>
++
++                    <Columns.Column>
++                        <Button onClick={() => this.clickRight()}>
++                            <FontAwesomeIcon icon={faCaretRight} size="lg" />{' '}
++                        </Button>
++                    </Columns.Column>
++                </Columns>
++
++                {/* <div className="feed"> {posts} </div> */}
++            </div>
++        );
++    }
++}
++
++class MainFeed extends React.Component {
++    render() {
+         return (
+             <div>
+                 <Navbar>
+@@ -348,36 +385,10 @@ class Feed extends React.Component {
+                         </Navbar.Container>
+                     </Navbar.Menu>
+                 </Navbar>
+-
+-                <p>Loading: {String(this.state.loading)}</p>
+-
+-                <Heading>
+-                    <Columns centered>
+-                        <Columns.Column>Profiles</Columns.Column>
+-                    </Columns>
+-                </Heading>
+-
+-                {/* edit App.css class feed to modify the styling of the feed */}
+-
+-                <Columns centered className="is-vcentered">
+-                    <Columns.Column>
+-                        <Button onClick={() => this.clickLeft()}>
+-                            <FontAwesomeIcon icon={faCaretLeft} size="lg" />
+-                        </Button>
+-                    </Columns.Column>
+-
+-                    <Columns.Column>
+-                        {posts[this.state.postIndex]}
+-                    </Columns.Column>
+-
+-                    <Columns.Column>
+-                        <Button onClick={() => this.clickRight()}>
+-                            <FontAwesomeIcon icon={faCaretRight} size="lg" />{' '}
+-                        </Button>
+-                    </Columns.Column>
+-                </Columns>
+-
+-                {/* <div className="feed"> {posts} </div> */}
++                <div>
++                    Main Feed:
++                    <Feed />
++                </div>
+             </div>
+         );
+     }
+@@ -455,4 +466,4 @@ class PostCreator extends React.Component {
+     }
+ }
+ 
+-export { Post, PostCreator, Feed };
++export { Post, PostCreator, Feed, MainFeed };
+diff --git a/cs35l-project-react-app/src/components/profile.js b/cs35l-project-react-app/src/components/profile.js
+index e4c1bc7..9038d70 100644
+--- a/cs35l-project-react-app/src/components/profile.js
++++ b/cs35l-project-react-app/src/components/profile.js
+@@ -2,18 +2,117 @@ import React from 'react';
+ import { firebase } from '../firebase';
+ import db from '../firebase';
+ import { Feed } from './posts.js';
++import {
++    Card,
++    Media,
++    Heading,
++    Content,
++    Button,
++    Columns,
++    Navbar,
++} from 'react-bulma-components';
++import { faUser } from '@fortawesome/free-solid-svg-icons';
++import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
++import { useParams } from 'react-router-dom';
+ 
+-class Profile extends React.Component {
++class CurrentUserProfile extends React.Component {
+     render() {
+         return (
+             <div>
+-                {/* Can add more stuff to this page, just wanted to show
+-                    the feed logic works for specifying posts from a 
+-                    specific user */ }
++                <Navbar>
++                    <Navbar.Brand>
++                        <Navbar.Item href="#">AppName</Navbar.Item>
++                    </Navbar.Brand>
++
++                    <Navbar.Menu>
++                        <Navbar.Container>
++                            <Navbar.Item href="#">Feed</Navbar.Item>
++
++                            <Navbar.Item href="#">My Profile</Navbar.Item>
++
++                            <Navbar.Item href="#">Something idk</Navbar.Item>
++                        </Navbar.Container>
++
++                        <Navbar.Container align="end">
++                            <Navbar.Item href="#">
++                                Login/Signup/Logout
++                            </Navbar.Item>
++                        </Navbar.Container>
++                    </Navbar.Menu>
++                </Navbar>
++
++                <div className="has-text-centered">
++                    <p className="is-size-1 mb-3 mt-0 pt-0">My Posts</p>
++                </div>
++
++                <Feed createdByUser={firebase.auth().currentUser.uid} />
++            </div>
++        );
++    }
++}
++
++class OtherUserProfile extends React.Component {
++    constructor(props) {
++        super(props);
++        this.state = {
++            username: '',
++        };
++
++    }
++
++    componentDidMount() {
++        this.fetchUsername();
++    }
++
++    fetchUsername() {
++        return db
++            .ref('users')
++            .child(this.props.match.params.uid)
++            .get()
++            .then((snapshot) => {
++                const response = snapshot.val();
++                this.setState({
++                    username: response.username,
++                });
++            });
++    }
++
++    render() {
++        return (
++            <div>
++                <Navbar>
++                    <Navbar.Brand>
++                        <Navbar.Item href="#">AppName</Navbar.Item>
++                    </Navbar.Brand>
++
++                    <Navbar.Menu>
++                        <Navbar.Container>
++                            <Navbar.Item href="#">Feed</Navbar.Item>
++
++                            <Navbar.Item href="#">My Profile</Navbar.Item>
++
++                            <Navbar.Item href="#">Something idk</Navbar.Item>
++                        </Navbar.Container>
++
++                        <Navbar.Container align="end">
++                            <Navbar.Item href="#">
++                                Login/Signup/Logout
++                            </Navbar.Item>
++                        </Navbar.Container>
++                    </Navbar.Menu>
++                </Navbar>
++
++                <div className="has-text-centered">
++                    <p>Showing posts for</p>
++                    <p className="is-size-1 mb-3 mt-0 pt-0">
++                        {this.state.username}
++                    </p>
++                </div>
++
+                 <Feed createdByUser={firebase.auth().currentUser.uid} />
+             </div>
+         );
+     }
+ }
+ 
+-export default Profile;
++export { CurrentUserProfile, OtherUserProfile };
+diff --git a/cs35l-project-react-app/src/components/search.js b/cs35l-project-react-app/src/components/search.js
+new file mode 100644
+index 0000000..f834792
+--- /dev/null
++++ b/cs35l-project-react-app/src/components/search.js
+@@ -0,0 +1,223 @@
++import React from 'react';
++import { firebase } from '../firebase';
++import db from '../firebase';
++import { Feed } from './posts.js';
++import {
++    Card,
++    Media,
++    Heading,
++    Content,
++    Button,
++    Columns,
++    Navbar,
++} from 'react-bulma-components';
++import { faSearch } from '@fortawesome/free-solid-svg-icons';
++import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
++
++
++/* 2 functions below (editDistance and similarity) are taken from https://stackoverflow.com/a/36566052/13604329.
++ * these are used for the filtering of results in the search 
++ * page.
++ * */
++function editDistance(s1, s2) {
++  s1 = s1.toLowerCase();
++  s2 = s2.toLowerCase();
++
++  var costs = new Array();
++  for (var i = 0; i <= s1.length; i++) {
++    var lastValue = i;
++    for (var j = 0; j <= s2.length; j++) {
++      if (i == 0)
++        costs[j] = j;
++      else {
++        if (j > 0) {
++          var newValue = costs[j - 1];
++          if (s1.charAt(i - 1) != s2.charAt(j - 1))
++            newValue = Math.min(Math.min(newValue, lastValue),
++              costs[j]) + 1;
++          costs[j - 1] = lastValue;
++          lastValue = newValue;
++        }
++      }
++    }
++    if (i > 0)
++      costs[s2.length] = lastValue;
++  }
++  return costs[s2.length];
++}
++
++function similarity(s1, s2) {
++  var longer = s1;
++  var shorter = s2;
++  if (s1.length < s2.length) {
++    longer = s2;
++    shorter = s1;
++  }
++  var longerLength = longer.length;
++  if (longerLength == 0) {
++    return 1.0;
++  }
++  return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
++}
++
++class UserSearchResult extends React.Component {
++    constructor(props) {
++        super(props);
++    }
++
++    render() {
++        return (
++            <tr
++                className="search-result"
++                onClick={() => this.props.selectEntry(this.props.uid)}
++            >
++                <td>{this.props.username}</td>
++            </tr>
++        );
++    }
++}
++
++class SearchForUser extends React.Component {
++    constructor(props) {
++        super(props);
++
++        this.state = {
++            searchEntry: '',
++            hasSearched: false, // for properly displaying "no results" message
++            results: [],
++        };
++    }
++
++    updateSearchEntry(event) {
++        this.setState({
++            searchEntry: event.target.value,
++        });
++    }
++
++    search() {
++        if (!this.state.searchEntry) return;
++        db.ref('users')
++            .get()
++            .then((snapshot) => {
++                /* this would not be an ideal solution for
++                 * a production environment, as we query 
++                 * every result in the db. I couldn't find 
++                 * a solution to filter results based on
++                 * similarity of values with firebase, so
++                 * this is required for now.
++                 * */
++                const response = snapshot.val();
++                var results = [];
++
++                for (var uid in response) {
++                    results.push({ uid, username: response[uid].username });
++                }
++
++                // return all results with a similar username
++                results = results.filter(result => {
++                    return similarity(result.username, this.state.searchEntry) > 0.5;
++                });
++
++                this.setState({
++                    results,
++                    hasSearched: true,
++                });
++            });
++    }
++
++    selectEntry(uid) {
++        this.props.history.push(`/view-user/${uid}`);
++        /* redirect user to visit profile page for the entry they selected */
++    }
++
++    handleKeyPress(event) {
++        if (event.key === "Enter") {
++            this.search() 
++        }
++    }
++
++    render() {
++        const results = this.state.results.map((result) => (
++            <UserSearchResult
++                selectEntry={(uid) => this.selectEntry(uid)}
++                {...result}
++                key={result.uid}
++            />
++        ));
++
++        var resultBody;
++
++        if (this.state.hasSearched) {
++            if (this.state.results.length) {
++                resultBody = (
++                    <>
++                        <p className="is-size-4">Results:</p>
++                        <table className="table is-fullwidth">
++                            <tbody>{results}</tbody>
++                        </table>
++                    </>
++                );
++            } else {
++                resultBody = (
++                    <p className="is-size-4 has-text-danger">No matches</p>
++                );
++            }
++        }
++
++        return (
++            <div>
++                <Navbar>
++                    <Navbar.Brand>
++                        <Navbar.Item href="#">AppName</Navbar.Item>
++                    </Navbar.Brand>
++
++                    <Navbar.Menu>
++                        <Navbar.Container>
++                            <Navbar.Item href="#">Feed</Navbar.Item>
++
++                            <Navbar.Item href="#">My Profile</Navbar.Item>
++
++                            <Navbar.Item href="#">Something idk</Navbar.Item>
++                        </Navbar.Container>
++
++                        <Navbar.Container align="end">
++                            <Navbar.Item href="#">
++                                Login/Signup/Logout
++                            </Navbar.Item>
++                        </Navbar.Container>
++                    </Navbar.Menu>
++                </Navbar>
++
++                <Columns centered>
++                    <Columns.Column className="mx-5">
++                        <div className="field has-addons">
++                            <div className="control is-expanded">
++                                <input
++                                    onChange={(event) =>
++                                        this.updateSearchEntry(event)
++                                    }
++                                    className="input"
++                                    type="text"
++                                    placeholder="Search by username"
++                                    onKeyPress={(event) => this.handleKeyPress(event)}
++                                />
++                            </div>
++                            <div className="control">
++                                <a
++                                    onClick={() => this.search()}
++                                    className="button is-info"
++                                >
++                                    <FontAwesomeIcon icon={faSearch} />
++                                </a>
++                            </div>
++                        </div>
++
++                        <div className="has-text-left">{resultBody}</div>
++                    </Columns.Column>
++                </Columns>
++            </div>
++        );
++    }
++}
++
++export default SearchForUser;
+diff --git a/cs35l-project-react-app/src/routes.js b/cs35l-project-react-app/src/routes.js
+index 423cd17..a4ad07e 100644
+--- a/cs35l-project-react-app/src/routes.js
++++ b/cs35l-project-react-app/src/routes.js
+@@ -1,11 +1,12 @@
+ import React, { Component } from 'react';
+ import { Switch, Route, Redirect } from 'react-router-dom';
+ import Frontpage from './frontpage';
+-import { Feed, PostCreator } from './components/posts.js';
++import { MainFeed, PostCreator } from './components/posts.js';
+ import { SignIn } from './components/auth.js';
+ import { SignUp } from './components/auth.js';
+-import Profile from './components/profile.js';
++import { CurrentUserProfile, OtherUserProfile } from './components/profile.js';
+ import { firebase } from './firebase';
++import SearchForUser from './components/search.js';
+ 
+ function PrivateRoute({ component: Component, authed, ...rest }) {
+     /* only users who are authenticated can visit this kind of route */
+@@ -19,9 +20,9 @@ function PrivateRoute({ component: Component, authed, ...rest }) {
+                     <Redirect
+                         to={{
+                             pathname: '/login',
+-                            state: { from: props.location }, 
+-                            /* pass the path to the login component, so that the 
+-                             * user will be redirected to the page they were trying 
++                            state: { from: props.location },
++                            /* pass the path to the login component, so that the
++                             * user will be redirected to the page they were trying
+                              * to get to after logging in */
+                         }}
+                     />
+@@ -38,8 +39,10 @@ const Routes = () => {
+             <Route path="/login" component={SignIn} />
+             <Route path="/signup" component={SignUp} />
+             <PrivateRoute path="/upload" component={PostCreator} />
+-            <PrivateRoute path="/feed" component={Feed} />
+-            <PrivateRoute path="/profile" component={Profile} />
++            <PrivateRoute path="/feed" component={MainFeed} />
++            <PrivateRoute path="/profile" component={CurrentUserProfile} />
++            <PrivateRoute path="/search" component={SearchForUser} />
++            <PrivateRoute path="/view-user/:uid" component={OtherUserProfile} />
+         </Switch>
+     );
+ };

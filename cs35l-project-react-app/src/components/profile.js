@@ -14,33 +14,13 @@ import {
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'react-router-dom';
+import CustomNavbar from "./navbar.js";
 
 class CurrentUserProfile extends React.Component {
     render() {
         return (
             <div>
-                <Navbar>
-                    <Navbar.Brand>
-                        <Navbar.Item href="#">AppName</Navbar.Item>
-                    </Navbar.Brand>
-
-                    <Navbar.Menu>
-                        <Navbar.Container>
-                            <Navbar.Item href="#">Feed</Navbar.Item>
-
-                            <Navbar.Item href="#">My Profile</Navbar.Item>
-
-                            <Navbar.Item href="#">Something idk</Navbar.Item>
-                        </Navbar.Container>
-
-                        <Navbar.Container align="end">
-                            <Navbar.Item href="#">
-                                Login/Signup/Logout
-                            </Navbar.Item>
-                        </Navbar.Container>
-                    </Navbar.Menu>
-                </Navbar>
-
+                <CustomNavbar />
                 <div className="has-text-centered">
                     <p className="is-size-1 mb-3 mt-0 pt-0">My Posts</p>
                 </div>
@@ -80,27 +60,7 @@ class OtherUserProfile extends React.Component {
     render() {
         return (
             <div>
-                <Navbar>
-                    <Navbar.Brand>
-                        <Navbar.Item href="#">AppName</Navbar.Item>
-                    </Navbar.Brand>
-
-                    <Navbar.Menu>
-                        <Navbar.Container>
-                            <Navbar.Item href="#">Feed</Navbar.Item>
-
-                            <Navbar.Item href="#">My Profile</Navbar.Item>
-
-                            <Navbar.Item href="#">Something idk</Navbar.Item>
-                        </Navbar.Container>
-
-                        <Navbar.Container align="end">
-                            <Navbar.Item href="#">
-                                Login/Signup/Logout
-                            </Navbar.Item>
-                        </Navbar.Container>
-                    </Navbar.Menu>
-                </Navbar>
+                <CustomNavbar />
 
                 <div className="has-text-centered">
                     <p>Showing posts for</p>
