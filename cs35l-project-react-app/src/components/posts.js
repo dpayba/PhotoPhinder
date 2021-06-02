@@ -1,6 +1,7 @@
 import React from 'react';
 import { firebase, storage } from '../firebase';
 import db from '../firebase';
+<<<<<<< HEAD
 import {
     Card,
     Media,
@@ -11,6 +12,18 @@ import {
     Navbar,
 } from 'react-bulma-components';
 import { Link } from 'react-router-dom';
+=======
+import 'bulma/css/bulma.min.css';
+import {
+    Button,
+    Form,
+    Columns,
+    Card,
+    Navbar,
+    Box,
+    Heading,
+} from 'react-bulma-components';
+>>>>>>> uniss
 
 class Post extends React.Component {
     render() {
@@ -423,30 +436,69 @@ class PostCreator extends React.Component {
 
     render() {
         return (
-            <div>
-                {/* styling and formatting of this
-                    can be redone. what's shown
-                    below is for demo purposes */}
+            <div> 
+                <Navbar>
+                    <Navbar.Brand>
+                        <Navbar.Item href="#">
+                            AppName
+                        </Navbar.Item>
+                    </Navbar.Brand>
 
-                {/* please feel free to remove the buttons once a better form of navigation
-                    has been established */}
-                <div style={{ marginBottom: '2rem' }}>
-                    <button onClick={() => this.props.history.push('/feed')}>
-                        Goto feed
-                    </button>
-                    <button onClick={() => this.props.history.push('/profile')}>
-                        Goto profile
-                    </button>
-                    <button onClick={() => this.props.history.push('/login')}>
-                        Goto login
-                    </button>
-                    <button onClick={() => this.props.history.push('/signup')}>
-                        Goto signup
-                    </button>
-                </div>
-                <input type="file" onChange={(e) => this.handleFileInput(e)} />
-                <br />
-                <button onClick={() => this.createPost()}>Post</button>
+                    <Navbar.Menu>
+                        <Navbar.Container>
+                            <Navbar.Item href="#">
+                                Feed
+                            </Navbar.Item>
+
+                            <Navbar.Item href="#">
+                                My Profile
+                            </Navbar.Item>
+
+                            <Navbar.Item href="#">
+                                Something idk
+                            </Navbar.Item>
+                        </Navbar.Container>
+
+                        <Navbar.Container align="end">
+                            <Navbar.Item href ="#">
+                                Login/Signup/Logout
+                            </Navbar.Item>
+                        </Navbar.Container>
+                    </Navbar.Menu>
+
+                </Navbar>
+
+                <Box style={{ width: 800, margin: 'auto' }}>
+                    <Heading>
+                    <Columns centered>
+                        <Columns.Column>
+                            Upload a Photo
+                        </Columns.Column>
+                    </Columns>
+
+                    </Heading>
+
+                    <Columns centered>
+                        <Columns.Column size="half">
+                            <input type="file" onChange={(e) => this.handleFileInput(e)} />
+                        </Columns.Column>
+                    </Columns>
+
+                    <Columns centered>
+                        <Columns.Column size="half">
+                        <Button.Group>
+                            <Button 
+                            fullwidth
+                            rounded 
+                            color="secondary"
+                            onClick={() => this.createPost()}
+                            >
+                                Post
+                            </Button>
+                        </Button.Group>
+                        </Columns.Column>
+                    </Columns>
+                </Box>            
             </div>
         );
     }
