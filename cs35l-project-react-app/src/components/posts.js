@@ -424,29 +424,35 @@ class PostCreator extends React.Component {
     render() {
         return (
             <div>
-                {/* styling and formatting of this
-                    can be redone. what's shown
-                    below is for demo purposes */}
+                <Navbar>
+                    <Navbar.Brand>
+                        <Navbar.Item href="#">
+                            <Link class="button is-primary" to="/">About Us</Link>
+                        </Navbar.Item>
+                    </Navbar.Brand>
+                    
+                    <Navbar.Menu>
+                        <Navbar.Container>
+                            <Navbar.Item href="#">
+                                <Link className="button is-primary" to="/feed">Browse Photos</Link>
+                            </Navbar.Item>
 
-                {/* please feel free to remove the buttons once a better form of navigation
-                    has been established */}
-                <div style={{ marginBottom: '2rem' }}>
-                    <button onClick={() => this.props.history.push('/feed')}>
-                        Goto feed
-                    </button>
-                    <button onClick={() => this.props.history.push('/profile')}>
-                        Goto profile
-                    </button>
-                    <button onClick={() => this.props.history.push('/login')}>
-                        Goto login
-                    </button>
-                    <button onClick={() => this.props.history.push('/signup')}>
-                        Goto signup
-                    </button>
-                </div>
+                            <Navbar.Item href="#">
+                                <Link className="button is-primary" to="/profile">My Profile</Link>
+                            </Navbar.Item>
+                        </Navbar.Container>
+
+                        <Navbar.Container align="end">
+                            <Navbar.Item href ="#">
+                                <Link className="button is-primary" to="/login">Login/Signup/Logout</Link>
+                            </Navbar.Item>
+                        </Navbar.Container>
+                    </Navbar.Menu>
+
+                </Navbar>
                 <input type="file" onChange={(e) => this.handleFileInput(e)} />
                 <br />
-                <button onClick={() => this.createPost()}>Post</button>
+                <Button className="is-primary" onClick={() => this.createPost()}>Post</Button>
             </div>
         );
     }

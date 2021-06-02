@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import 'bulma/css/bulma.min.css';
 import {
-    Button,
-    Form,
-    Columns,
-    Card,
     Navbar,
-    Box,
-    Heading,
 } from 'react-bulma-components';
 import './App.css';
 
