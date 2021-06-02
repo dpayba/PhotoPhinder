@@ -13,22 +13,44 @@ class Chat extends React.Component {
             writeError: null
         };
 
-        this.handleChange = this.handleDelta.bind(this);
-        this.handleSubmit = this.handleSend.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     async componentDidMount() {
         this.setState({ readError: null });
         try {
-            db.ref("chats").on("value", snapshot => {
+            db.ref("chats").orderByChild().on("value", snapshot => {
                 let chats = [];
                 snapshot.forEach((snap) => {
                     chats.push(snap.val());
-                })
+                });
+                
                 this.setState({ chats });
             });
         } catch (error) {
             this.setState({ readError: error.message });
+        }
+    }
+
+    handleChange(event) {
+        this.setState({
+            content: event.target.value
+        });
+    }
+
+    async handleSubmit(event) {
+        event.preventDefault();
+        this.setState({ writeError: null });
+        try {
+            await db.ref("chats").chatId.messages.push({
+                content: this.state.content,
+                timestamp: Date.now(),
+                uid: this.state.user.uid
+            });
+            this.setState({ content: '' });
+        } catch (error) {
+            this.setState({ writeError: error.message });
         }
     }
 
@@ -41,8 +63,8 @@ class Chat extends React.Component {
                     })}
                 </div>
 
-                <form onSubmit={this.handleSend}>
-                    <input onChange={this.handleDelta} value={this.state.content}></input>
+                <form onSubmit={this.handleSubmit}>
+                    <input onChange={this.handleChange} value={this.state.content}></input>
                     {this.state.error ? <p>{this.state.writeError}</p> : null}
                     <button type="submit">Send</button>
                 </form>
@@ -53,26 +75,6 @@ class Chat extends React.Component {
             </div>
         );
     }
-
-    handleDelta(event) {
-        this.setState({
-            content: event.target.value
-        });
-    }
-
-    async handleSend(event) {
-        event.preventDefault();
-        this.setState({ writeError: null });
-        try {
-            await db.ref("chats").push({
-                content: this.state.content,
-                timestamp: Date.now(),
-                uid: this.state.user.uid
-            });
-            this.setState({ content: '' });
-        } catch (error) {
-            this.setState({ writeError: error.message });
-        }
-    }
 }
 
+export default Chat;
