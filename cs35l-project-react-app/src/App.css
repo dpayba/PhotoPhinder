@@ -19,6 +19,14 @@
     margin: auto;
 }
 
+.search-result {
+    cursor: pointer;
+}
+
+.search-result:hover {
+    background-color: #e6e6e6;
+}
+
 .App-header
 {
   text-align: center;

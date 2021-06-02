@@ -17,22 +17,33 @@ import {
     faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 
-
 class Post extends React.Component {
     render() {
         var likeButton;
         if (this.props.currentUserHasLiked) {
             likeButton = (
-                <Button className="has-text-danger" onClick={() => this.props.removeCurrentUserLike()}>
-                    <FontAwesomeIcon style={{ paddingRight: "4px" }} icon={faThumbsUp} /> Like
+                <Button
+                    className="has-text-danger"
+                    onClick={() => this.props.removeCurrentUserLike()}
+                >
+                    <FontAwesomeIcon
+                        style={{ paddingRight: '4px' }}
+                        icon={faThumbsUp}
+                    />{' '}
+                    Like
                 </Button>
             );
-        }
-
-        else {
+        } else {
             likeButton = (
-                <Button className="has-text-grey" onClick={() => this.props.addCurrentUserLike()}>
-                    <FontAwesomeIcon style={{ paddingRight: "4px" }} icon={faThumbsUp} /> Like
+                <Button
+                    className="has-text-grey"
+                    onClick={() => this.props.addCurrentUserLike()}
+                >
+                    <FontAwesomeIcon
+                        style={{ paddingRight: '4px' }}
+                        icon={faThumbsUp}
+                    />{' '}
+                    Like
                 </Button>
             );
         }
@@ -55,9 +66,7 @@ class Post extends React.Component {
                         <Content>
                             <p>likes: {Object.keys(this.props.likes).length}</p>
                             <Columns centered>
-                                <Columns.Column>
-                                    {likeButton}
-                                </Columns.Column>
+                                <Columns.Column>{likeButton}</Columns.Column>
                             </Columns>
                         </Content>
                     </Card.Content>
@@ -327,6 +336,34 @@ class Feed extends React.Component {
 
         return (
             <div>
+                <Columns centered className="is-vcentered">
+                    <Columns.Column>
+                        <Button onClick={() => this.clickLeft()}>
+                            <FontAwesomeIcon icon={faCaretLeft} size="lg" />
+                        </Button>
+                    </Columns.Column>
+
+                    <Columns.Column>
+                        {posts[this.state.postIndex]}
+                    </Columns.Column>
+
+                    <Columns.Column>
+                        <Button onClick={() => this.clickRight()}>
+                            <FontAwesomeIcon icon={faCaretRight} size="lg" />{' '}
+                        </Button>
+                    </Columns.Column>
+                </Columns>
+
+                {/* <div className="feed"> {posts} </div> */}
+            </div>
+        );
+    }
+}
+
+class MainFeed extends React.Component {
+    render() {
+        return (
+            <div>
                 <Navbar>
                     <Navbar.Brand>
                         <Navbar.Item href="#">AppName</Navbar.Item>
@@ -348,36 +385,10 @@ class Feed extends React.Component {
                         </Navbar.Container>
                     </Navbar.Menu>
                 </Navbar>
-
-                <p>Loading: {String(this.state.loading)}</p>
-
-                <Heading>
-                    <Columns centered>
-                        <Columns.Column>Profiles</Columns.Column>
-                    </Columns>
-                </Heading>
-
-                {/* edit App.css class feed to modify the styling of the feed */}
-
-                <Columns centered className="is-vcentered">
-                    <Columns.Column>
-                        <Button onClick={() => this.clickLeft()}>
-                            <FontAwesomeIcon icon={faCaretLeft} size="lg" />
-                        </Button>
-                    </Columns.Column>
-
-                    <Columns.Column>
-                        {posts[this.state.postIndex]}
-                    </Columns.Column>
-
-                    <Columns.Column>
-                        <Button onClick={() => this.clickRight()}>
-                            <FontAwesomeIcon icon={faCaretRight} size="lg" />{' '}
-                        </Button>
-                    </Columns.Column>
-                </Columns>
-
-                {/* <div className="feed"> {posts} </div> */}
+                <div>
+                    Main Feed:
+                    <Feed />
+                </div>
             </div>
         );
     }
@@ -455,4 +466,4 @@ class PostCreator extends React.Component {
     }
 }
 
-export { Post, PostCreator, Feed };
+export { Post, PostCreator, Feed, MainFeed };
