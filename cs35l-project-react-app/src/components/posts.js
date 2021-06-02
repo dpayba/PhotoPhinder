@@ -340,7 +340,6 @@ class MainFeed extends React.Component {
             <div>
                 <CustomNavbar />
                 <div>
-                    Main Feed:
                     <Feed />
                 </div>
             </div>
