@@ -1,5 +1,6 @@
 import React from 'react';
 import { firebase, storage } from '../firebase';
+import { Link } from "react-router-dom";
 import db from '../firebase';
 import {
     Box,
@@ -424,32 +425,28 @@ class PostCreator extends React.Component {
 
     render() {
         return (
-            <div> 
+            <div>
                 <Navbar>
                     <Navbar.Brand>
                         <Navbar.Item href="#">
-                            AppName
+                            <Link class="button is-primary" to="/">About Us</Link>
                         </Navbar.Item>
                     </Navbar.Brand>
-
+                    
                     <Navbar.Menu>
                         <Navbar.Container>
                             <Navbar.Item href="#">
-                                Feed
+                                <Link className="button is-primary" to="/feed">Browse Photos</Link>
                             </Navbar.Item>
 
                             <Navbar.Item href="#">
-                                My Profile
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                Something idk
+                                <Link className="button is-primary" to="/profile">My Profile</Link>
                             </Navbar.Item>
                         </Navbar.Container>
 
                         <Navbar.Container align="end">
                             <Navbar.Item href ="#">
-                                Login/Signup/Logout
+                                <Link className="button is-primary" to="/login">Login/Signup/Logout</Link>
                             </Navbar.Item>
                         </Navbar.Container>
                     </Navbar.Menu>
@@ -475,7 +472,7 @@ class PostCreator extends React.Component {
                     <Columns centered>
                         <Columns.Column size="half">
                         <Button.Group>
-                            <Button 
+                            <Button className="is-info"
                             fullwidth
                             rounded 
                             color="primary"
