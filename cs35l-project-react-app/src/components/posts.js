@@ -18,7 +18,7 @@ import {
     faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import CustomNavbar from "./navbar.js";
+import CustomNavbar from './navbar.js';
 
 class Post extends React.Component {
     render() {
@@ -89,7 +89,6 @@ class Feed extends React.Component {
             postIndex: 0,
         };
     }
-    
 
     fetchPostImg(postId) {
         return storage
@@ -209,7 +208,6 @@ class Feed extends React.Component {
         var postIndex;
 
         for (var i = 0; i < this.state.posts.length; i++) {
-            console.log(this.state.posts[i].id);
             if (this.state.posts[i].id === postId) postIndex = i;
         }
 
@@ -246,7 +244,6 @@ class Feed extends React.Component {
         var postIndex;
 
         for (var i = 0; i < this.state.posts.length; i++) {
-            console.log(this.state.posts[i].id);
             if (this.state.posts[i].id === postId) postIndex = i;
         }
 
@@ -310,11 +307,18 @@ class Feed extends React.Component {
             />
         ));
 
+        const leftButtonDisabled = this.state.postIndex === 0;
+        const rightButtonDisabled =
+            this.state.postIndex === this.state.posts.length - 1;
+
         return (
             <div>
                 <Columns centered className="is-vcentered">
                     <Columns.Column>
-                        <Button onClick={() => this.clickLeft()}>
+                        <Button
+                            disabled={leftButtonDisabled}
+                            onClick={() => this.clickLeft()}
+                        >
                             <FontAwesomeIcon icon={faCaretLeft} size="lg" />
                         </Button>
                     </Columns.Column>
@@ -324,7 +328,10 @@ class Feed extends React.Component {
                     </Columns.Column>
 
                     <Columns.Column>
-                        <Button onClick={() => this.clickRight()}>
+                        <Button
+                            disabled={rightButtonDisabled}
+                            onClick={() => this.clickRight()}
+                        >
                             <FontAwesomeIcon icon={faCaretRight} size="lg" />{' '}
                         </Button>
                     </Columns.Column>
@@ -354,7 +361,7 @@ class PostCreator extends React.Component {
         this.state = {
             loading: false,
             img: null,
-            name: "No file chosen"
+            name: 'No file chosen',
             // other post fields, (e.g. caption)
         };
     }
@@ -368,17 +375,15 @@ class PostCreator extends React.Component {
         }
     }
 
-    getFileName(e)
-    {
-        if(e.target.files[0]) {
+    getFileName(e) {
+        if (e.target.files[0]) {
             this.setState({
                 name: e.target.files[0].name,
             });
         }
     }
 
-    helperFunc(e)
-    {
+    helperFunc(e) {
         this.handleFileInput(e);
         this.getFileName(e);
     }
@@ -411,12 +416,9 @@ class PostCreator extends React.Component {
 
                 <Box style={{ width: 800, margin: 'auto' }}>
                     <Heading>
-                    <Columns centered>
-                        <Columns.Column>
-                            Upload a Photo
-                        </Columns.Column>
-                    </Columns>
-
+                        <Columns centered>
+                            <Columns.Column>Upload a Photo</Columns.Column>
+                        </Columns>
                     </Heading>
 
                     <Columns centered>
@@ -424,11 +426,16 @@ class PostCreator extends React.Component {
                             <div class="file has-name">
                                 <label class="file-label">
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <input class="file-input" type="file" name="resume" onChange={(e) => this.helperFunc(e)}></input>
+                                    <input
+                                        class="file-input"
+                                        type="file"
+                                        name="resume"
+                                        onChange={(e) => this.helperFunc(e)}
+                                    ></input>
                                     <span class="file-cta">
-                                    <span class="file-label">
-                                        Choose a file…
-                                    </span>
+                                        <span class="file-label">
+                                            Choose a file…
+                                        </span>
                                     </span>
                                     <span class="file-name">
                                         {this.state.name}
@@ -440,19 +447,20 @@ class PostCreator extends React.Component {
 
                     <Columns centered>
                         <Columns.Column size="half">
-                        <Button.Group>
-                            <Button className="is-info"
-                            fullwidth
-                            rounded 
-                            color="primary"
-                            onClick={() => this.createPost()}
-                            >
-                                Post
-                            </Button>
-                        </Button.Group>
+                            <Button.Group>
+                                <Button
+                                    className="is-info"
+                                    fullwidth
+                                    rounded
+                                    color="primary"
+                                    onClick={() => this.createPost()}
+                                >
+                                    Post
+                                </Button>
+                            </Button.Group>
                         </Columns.Column>
                     </Columns>
-                </Box>            
+                </Box>
             </div>
         );
     }

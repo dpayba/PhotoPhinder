@@ -69,7 +69,7 @@ class OtherUserProfile extends React.Component {
                     </p>
                 </div>
 
-                <Feed createdByUser={firebase.auth().currentUser.uid} />
+                <Feed createdByUser={this.props.match.params.uid} />
             </div>
         );
     }
