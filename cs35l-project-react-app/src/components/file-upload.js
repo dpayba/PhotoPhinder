@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 import { storage } from '../firebase';
 import { render } from "react-dom"; 
+import 'bulma/css/bulma.min.css';
+import {
+    Button,
+    Form,
+    Columns,
+    Card,
+    Navbar,
+    Box,
+    Heading,
+} from 'react-bulma-components';
+import './App.css';
 
 const FirebaseUpload = () => { // custom hook created
   const [image, setImage] = useState(null); // variable stored if file

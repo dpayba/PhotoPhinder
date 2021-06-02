@@ -12,6 +12,7 @@ import {
 } from 'react-bulma-components';
 import { Link } from 'react-router-dom';
 import React from 'react';
+import CustomNavbar from "./navbar.js";
 
 /*
  * Simple implementation of sign in and sign up component,
@@ -73,37 +74,7 @@ class SignIn extends React.Component {
     render() {
         return (
             <div> 
-                <Navbar>
-                    <Navbar.Brand>
-                        <Navbar.Item href="#">
-                            AppName
-                        </Navbar.Item>
-                    </Navbar.Brand>
-
-                    <Navbar.Menu>
-                        <Navbar.Container>
-                            <Navbar.Item href="#">
-                                Feed
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                My Profile
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                Something idk
-                            </Navbar.Item>
-                        </Navbar.Container>
-
-                        <Navbar.Container align="end">
-                            <Navbar.Item href ="#">
-                                Login/Signup/Logout
-                            </Navbar.Item>
-                        </Navbar.Container>
-                    </Navbar.Menu>
-
-                </Navbar>
-
+                <CustomNavbar />
                 <Box style={{ width: 800, margin: 'auto' }}>
 
                 <Heading>
@@ -240,37 +211,7 @@ class SignUp extends React.Component {
     render() {
         return (
             <div>
-                <Navbar>
-                    <Navbar.Brand>
-                        <Navbar.Item href="#">
-                            AppName
-                        </Navbar.Item>
-                    </Navbar.Brand>
-                    
-                    <Navbar.Menu>
-                        <Navbar.Container>
-                            <Navbar.Item href="#">
-                                Feed
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                My Profile
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                Something idk
-                            </Navbar.Item>
-                        </Navbar.Container>
-
-                        <Navbar.Container align="end">
-                            <Navbar.Item href ="#">
-                                Login/Signup/Logout
-                            </Navbar.Item>
-                        </Navbar.Container>
-                    </Navbar.Menu>
-
-                </Navbar>
-
+                <CustomNavbar />
                 <Box style={{ width: 800, margin: 'auto' }}>
                 
                 <Heading>

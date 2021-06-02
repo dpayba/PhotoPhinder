@@ -1,13 +1,20 @@
 import React from 'react';
 import { auth } from '../firebase';
 import db from '../firebase';
+import { firebase } from '../firebase';
+
+// When chat button pressed, pull up this room
+// Will have a user already signed in or asked to sign in, and another user
+// If user ID is same as current user ID, that's the same person
+// Else, create a chat room with current user and profile of user clicked on
+// Will have two user IDs, current user sends message to other user.
 
 class Chat extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: auth().currentUser,
+            user: firebase.auth().currentUser,
             chats: [],
             readError: null,
             writeError: null

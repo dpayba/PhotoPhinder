@@ -2,6 +2,7 @@ import React from 'react';
 import { firebase, storage } from '../firebase';
 import db from '../firebase';
 import {
+    Box,
     Card,
     Media,
     Heading,
@@ -10,72 +11,69 @@ import {
     Columns,
     Navbar,
 } from 'react-bulma-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faCaretRight,
+    faCaretLeft,
+    faThumbsUp,
+} from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import CustomNavbar from './navbar.js';
 
 class Post extends React.Component {
     render() {
+        var likeButton;
+        if (this.props.currentUserHasLiked) {
+            likeButton = (
+                <Button
+                    className="has-text-danger"
+                    onClick={() => this.props.removeCurrentUserLike()}
+                >
+                    <FontAwesomeIcon
+                        style={{ paddingRight: '4px' }}
+                        icon={faThumbsUp}
+                    />{' '}
+                    Like
+                </Button>
+            );
+        } else {
+            likeButton = (
+                <Button
+                    className="has-text-grey"
+                    onClick={() => this.props.addCurrentUserLike()}
+                >
+                    <FontAwesomeIcon
+                        style={{ paddingRight: '4px' }}
+                        icon={faThumbsUp}
+                    />{' '}
+                    Like
+                </Button>
+            );
+        }
+
         return (
             <div>
                 <Card>
                     <Card.Image
-                    size="4by3"
-                    src={this.props.imgUrl}
-                    alt="Post Image"
+                        size="4by3"
+                        src={this.props.imgUrl}
+                        alt="Post Image"
                     />
                     <Card.Content>
                         <Media.Item>
-                            <Heading size={4}>{this.props.creatorUsername}</Heading>
+                            <Heading size={4}>
+                                {this.props.creatorUsername}
+                            </Heading>
                         </Media.Item>
 
                         <Content>
                             <p>likes: {Object.keys(this.props.likes).length}</p>
                             <Columns centered>
-                                <Columns.Column size="half">
-                                        <Button
-                                        onClick={() => this.props.addCurrentUserLike()}
-                                        >
-                                            Like
-                                        </Button>
-                                </Columns.Column>
-                                <Columns.Column size="half">
-                                        <Button
-                                        onClick={() => this.props.removeCurrentUserLike()}
-                                        >
-                                            Unlike 
-                                        </Button>
-
-                                </Columns.Column>
+                                <Columns.Column>{likeButton}</Columns.Column>
                             </Columns>
                         </Content>
                     </Card.Content>
                 </Card>
-
-            {/*
-            <div className="post">
-                {/* styling and formatting of this
-                    can be redone. what's shown
-                    below is for demo purposes.
-                    Current styling is in the post
-                    class in App.css }
-                <p>{this.props.creatorUsername}</p>
-                <img
-                    width="500"
-                    height="450"
-                    src={this.props.imgUrl}
-                    alt="Post Image"
-                />
-                {/* ^^I wasn't able to figure out how
-                    to make the image a fixed size
-                    without stretching }
-                <p>likes: {Object.keys(this.props.likes).length}</p>
-                <p>currentUserHasLiked: {String(this.props.currentUserHasLiked)}</p>
-                <button onClick={() => this.props.addCurrentUserLike()}>
-                    Like
-                </button>
-                <button onClick={() => this.props.removeCurrentUserLike()}>
-                    Unlike
-                </button>
-            </div>
-                */}
             </div>
         );
     }
@@ -210,7 +208,6 @@ class Feed extends React.Component {
         var postIndex;
 
         for (var i = 0; i < this.state.posts.length; i++) {
-            console.log(this.state.posts[i].id);
             if (this.state.posts[i].id === postId) postIndex = i;
         }
 
@@ -247,7 +244,6 @@ class Feed extends React.Component {
         var postIndex;
 
         for (var i = 0; i < this.state.posts.length; i++) {
-            console.log(this.state.posts[i].id);
             if (this.state.posts[i].id === postId) postIndex = i;
         }
 
@@ -294,7 +290,7 @@ class Feed extends React.Component {
         } else {
             this.setState({
                 postIndex: this.state.postIndex + 1,
-            })
+            });
         }
     }
 
@@ -311,55 +307,20 @@ class Feed extends React.Component {
             />
         ));
 
+        const leftButtonDisabled = this.state.postIndex === 0;
+        const rightButtonDisabled =
+            this.state.postIndex === this.state.posts.length - 1;
+
         return (
             <div>
-              <Navbar>
-                    <Navbar.Brand>
-                        <Navbar.Item href="#">
-                            AppName
-                        </Navbar.Item>
-                    </Navbar.Brand>
-                    
-                    <Navbar.Menu>
-                        <Navbar.Container>
-                            <Navbar.Item href="#">
-                                Feed
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                My Profile
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                Something idk
-                            </Navbar.Item>
-                        </Navbar.Container>
-
-                        <Navbar.Container align="end">
-                            <Navbar.Item href ="#">
-                                Login/Signup/Logout
-                            </Navbar.Item>
-                        </Navbar.Container>
-                    </Navbar.Menu>
-                </Navbar>
-
-                <p>Loading: {String(this.state.loading)}</p>
-
-                <Heading>
-                    <Columns centered>
-                        <Columns.Column>
-                            Profiles
-                        </Columns.Column>
-                    </Columns>
-                </Heading>
-                
-                {/* edit App.css class feed to modify the styling of the feed */}
-
-                <Columns centered>
+                <Columns centered className="is-vcentered">
                     <Columns.Column>
                         <Button
-                        onClick={() => this.clickLeft()}
-                        >Left</Button>
+                            disabled={leftButtonDisabled}
+                            onClick={() => this.clickLeft()}
+                        >
+                            <FontAwesomeIcon icon={faCaretLeft} size="lg" />
+                        </Button>
                     </Columns.Column>
 
                     <Columns.Column>
@@ -368,12 +329,32 @@ class Feed extends React.Component {
 
                     <Columns.Column>
                         <Button
-                        onClick={() => this.clickRight()}
-                        >Right</Button>
+                            disabled={rightButtonDisabled}
+                            onClick={() => this.clickRight()}
+                        >
+                            <FontAwesomeIcon icon={faCaretRight} size="lg" />{' '}
+                        </Button>
                     </Columns.Column>
                 </Columns>
+            </div>
+        );
+    }
+}
 
-                {/* <div className="feed"> {posts} </div> */}
+class MainFeed extends React.Component {
+    render() {
+        return (
+            <div>
+                <CustomNavbar />
+                <div>
+                    <Feed />
+                    <p>&nbsp;</p>
+                    <Button className="is-info">
+                        <Link class="button is-info" to="/upload">
+                            Create a Post
+                        </Link>
+                    </Button>
+                </div>
             </div>
         );
     }
@@ -381,11 +362,12 @@ class Feed extends React.Component {
 
 class PostCreator extends React.Component {
     constructor(props) {
-        super(props); 
+        super(props);
 
         this.state = {
             loading: false,
             img: null,
+            name: 'No file chosen',
             // other post fields, (e.g. caption)
         };
     }
@@ -397,6 +379,19 @@ class PostCreator extends React.Component {
                 img: e.target.files[0],
             });
         }
+    }
+
+    getFileName(e) {
+        if (e.target.files[0]) {
+            this.setState({
+                name: e.target.files[0].name,
+            });
+        }
+    }
+
+    helperFunc(e) {
+        this.handleFileInput(e);
+        this.getFileName(e);
     }
 
     uploadInstanceImg(instanceId) {
@@ -423,32 +418,58 @@ class PostCreator extends React.Component {
     render() {
         return (
             <div>
-                {/* styling and formatting of this
-                    can be redone. what's shown
-                    below is for demo purposes */}
+                <CustomNavbar />
 
-                {/* please feel free to remove the buttons once a better form of navigation
-                    has been established */}
-                <div style={{ marginBottom: '2rem' }}>
-                    <button onClick={() => this.props.history.push('/feed')}>
-                        Goto feed
-                    </button>
-                    <button onClick={() => this.props.history.push('/profile')}>
-                        Goto profile
-                    </button>
-                    <button onClick={() => this.props.history.push('/login')}>
-                        Goto login
-                    </button>
-                    <button onClick={() => this.props.history.push('/signup')}>
-                        Goto signup
-                    </button>
-                </div>
-                <input type="file" onChange={(e) => this.handleFileInput(e)} />
-                <br />
-                <button onClick={() => this.createPost()}>Post</button>
+                <Box style={{ width: 800, margin: 'auto' }}>
+                    <Heading>
+                        <Columns centered>
+                            <Columns.Column>Upload a Photo</Columns.Column>
+                        </Columns>
+                    </Heading>
+
+                    <Columns centered>
+                        <Columns.Column size="half">
+                            <div class="file has-name">
+                                <label class="file-label">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input
+                                        class="file-input"
+                                        type="file"
+                                        name="resume"
+                                        onChange={(e) => this.helperFunc(e)}
+                                    ></input>
+                                    <span class="file-cta">
+                                        <span class="file-label">
+                                            Choose a file…
+                                        </span>
+                                    </span>
+                                    <span class="file-name">
+                                        {this.state.name}
+                                    </span>
+                                </label>
+                            </div>
+                        </Columns.Column>
+                    </Columns>
+
+                    <Columns centered>
+                        <Columns.Column size="half">
+                            <Button.Group>
+                                <Button
+                                    className="is-info"
+                                    fullwidth
+                                    rounded
+                                    color="primary"
+                                    onClick={() => this.createPost()}
+                                >
+                                    Post
+                                </Button>
+                            </Button.Group>
+                        </Columns.Column>
+                    </Columns>
+                </Box>
             </div>
         );
     }
 }
 
-export { Post, PostCreator, Feed };
+export { Post, PostCreator, Feed, MainFeed };
