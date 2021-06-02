@@ -1,16 +1,18 @@
 import React from 'react';
 import { firebase, storage } from '../firebase';
+import { Link } from "react-router-dom";
 import db from '../firebase';
+import 'bulma/css/bulma.min.css';
 import {
-    Card,
-    Media,
-    Heading,
-    Content,
     Button,
     Columns,
+    Card,
     Navbar,
+    Box,
+    Heading,
+    Media,
+    Content
 } from 'react-bulma-components';
-import { Link } from 'react-router-dom';
 
 class Post extends React.Component {
     render() {
@@ -450,9 +452,37 @@ class PostCreator extends React.Component {
                     </Navbar.Menu>
 
                 </Navbar>
-                <input type="file" onChange={(e) => this.handleFileInput(e)} />
-                <br />
-                <Button className="is-primary" onClick={() => this.createPost()}>Post</Button>
+
+                <Box style={{ width: 800, margin: 'auto' }}>
+                    <Heading>
+                    <Columns centered>
+                        <Columns.Column>
+                            Upload a Photo
+                        </Columns.Column>
+                    </Columns>
+
+                    </Heading>
+
+                    <Columns centered>
+                        <Columns.Column size="half">
+                            <input type="file" onChange={(e) => this.handleFileInput(e)} />
+                        </Columns.Column>
+                    </Columns>
+
+                    <Columns centered>
+                        <Columns.Column size="half">
+                        <Button.Group>
+                            <Button className="is-info"
+                            fullwidth
+                            rounded 
+                            onClick={() => this.createPost()}
+                            >
+                                Post
+                            </Button>
+                        </Button.Group>
+                        </Columns.Column>
+                    </Columns>
+                </Box>            
             </div>
         );
     }
