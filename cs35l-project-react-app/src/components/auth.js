@@ -12,6 +12,7 @@ import {
 } from 'react-bulma-components';
 import { Link } from 'react-router-dom';
 import React from 'react';
+import CustomNavbar from "./navbar.js";
 
 /*
  * Simple implementation of sign in and sign up component,
@@ -73,32 +74,7 @@ class SignIn extends React.Component {
     render() {
         return (
             <div> 
-                <Navbar>
-                    <Navbar.Brand>
-                        <Navbar.Item href="#">
-                            <Link class="button is-primary" to="/">About Us</Link>
-                        </Navbar.Item>
-                    </Navbar.Brand>
-                    
-                    <Navbar.Menu>
-                        <Navbar.Container>
-                            <Navbar.Item href="#">
-                                <Link className="button is-primary" to="/feed">Browse Photos</Link>
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                <Link className="button is-primary" to="/profile">My Profile</Link>
-                            </Navbar.Item>
-                        </Navbar.Container>
-
-                        <Navbar.Container align="end">
-                            <Navbar.Item href ="#">
-                                <Link className="button is-primary" to="/login">Login/Signup/Logout</Link>
-                            </Navbar.Item>
-                        </Navbar.Container>
-                    </Navbar.Menu>
-                </Navbar>
-
+                <CustomNavbar />
                 <Box style={{ width: 800, margin: 'auto' }}>
 
                 <Heading>
@@ -235,32 +211,7 @@ class SignUp extends React.Component {
     render() {
         return (
             <div>
-                <Navbar>
-                    <Navbar.Brand>
-                        <Navbar.Item href="#">
-                            <Link class="button is-primary" to="/">About Us</Link>
-                        </Navbar.Item>
-                    </Navbar.Brand>
-                    
-                    <Navbar.Menu>
-                        <Navbar.Container>
-                            <Navbar.Item href="#">
-                                <Link className="button is-primary" to="/feed">Browse Photos</Link>
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                <Link className="button is-primary" to="/my-profile">My Profile</Link>
-                            </Navbar.Item>
-                        </Navbar.Container>
-
-                        <Navbar.Container align="end">
-                            <Navbar.Item href ="#">
-                                <Link className="button is-primary" to="/login">Login/Signup/Logout</Link>
-                            </Navbar.Item>
-                        </Navbar.Container>
-                    </Navbar.Menu>
-                </Navbar>
-
+                <CustomNavbar />
                 <Box style={{ width: 800, margin: 'auto' }}>
                 
                 <Heading>

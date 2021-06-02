@@ -20,7 +20,6 @@ import {
 import { Link } from 'react-router-dom';
 import CustomNavbar from "./navbar.js";
 
-
 class Post extends React.Component {
     render() {
         var likeButton;
@@ -90,6 +89,7 @@ class Feed extends React.Component {
             postIndex: 0,
         };
     }
+    
 
     fetchPostImg(postId) {
         return storage
@@ -355,6 +355,7 @@ class PostCreator extends React.Component {
         this.state = {
             loading: false,
             img: null,
+            name: "No file chosen"
             // other post fields, (e.g. caption)
         };
     }
@@ -366,6 +367,21 @@ class PostCreator extends React.Component {
                 img: e.target.files[0],
             });
         }
+    }
+
+    getFileName(e)
+    {
+        if(e.target.files[0]) {
+            this.setState({
+                name: e.target.files[0].name,
+            });
+        }
+    }
+
+    helperFunc(e)
+    {
+        this.handleFileInput(e);
+        this.getFileName(e);
     }
 
     uploadInstanceImg(instanceId) {
@@ -406,7 +422,20 @@ class PostCreator extends React.Component {
 
                     <Columns centered>
                         <Columns.Column size="half">
-                            <input type="file" onChange={(e) => this.handleFileInput(e)} />
+                            <div class="file has-name">
+                                <label class="file-label">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input class="file-input" type="file" name="resume" onChange={(e) => this.helperFunc(e)}></input>
+                                    <span class="file-cta">
+                                    <span class="file-label">
+                                        Choose a file…
+                                    </span>
+                                    </span>
+                                    <span class="file-name">
+                                        {this.state.name}
+                                    </span>
+                                </label>
+                            </div>
                         </Columns.Column>
                     </Columns>
 

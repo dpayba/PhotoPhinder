@@ -5,6 +5,7 @@ import {
     Navbar,
 } from 'react-bulma-components';
 import './App.css';
+import CustomNavbar from "./components/navbar.js";
 
 
 
@@ -15,32 +16,7 @@ class Frontpage extends Component
     {
         return(
         <div id="page-container">
-            <Navbar>
-                    <Navbar.Brand>
-                        <Navbar.Item href="#">
-                            <Link class="button is-primary" to="/">About Us</Link>
-                        </Navbar.Item>
-                    </Navbar.Brand>
-                    
-                    <Navbar.Menu>
-                        <Navbar.Container>
-                            <Navbar.Item href="#">
-                                <Link className="button is-primary" to="/feed">Browse Photos</Link>
-                            </Navbar.Item>
-
-                            <Navbar.Item href="#">
-                                <Link className="button is-primary" to="/profile">My Profile</Link>
-                            </Navbar.Item>
-                        </Navbar.Container>
-
-                        <Navbar.Container align="end">
-                            <Navbar.Item href ="#">
-                                <Link className="button is-primary" to="/login">Login/Signup/Logout</Link>
-                            </Navbar.Item>
-                        </Navbar.Container>
-                    </Navbar.Menu>
-
-                </Navbar>
+            <CustomNavbar />
             <p>&nbsp;</p>
             <div class="content is-large">
                 <h1>Welcome to PhotoPhinder!</h1>
