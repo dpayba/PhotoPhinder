@@ -13,8 +13,8 @@ class Chat extends React.Component {
             writeError: null
         };
 
-        this.handleChange = this.hangleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleDelta.bind(this);
+        this.handleSubmit = this.handleSend.bind(this);
     }
 
     async componentDidMount() {
@@ -41,8 +41,8 @@ class Chat extends React.Component {
                     })}
                 </div>
 
-                <form onSubmit={this.handleSubmit}>
-                    <input onChange={this.handleChange} value={this.state.content}></input>
+                <form onSubmit={this.handleSend}>
+                    <input onChange={this.handleDelta} value={this.state.content}></input>
                     {this.state.error ? <p>{this.state.writeError}</p> : null}
                     <button type="submit">Send</button>
                 </form>
@@ -54,13 +54,13 @@ class Chat extends React.Component {
         );
     }
 
-    handleChange(event) {
+    handleDelta(event) {
         this.setState({
             content: event.target.value
         });
     }
 
-    async handleSubmit(event) {
+    async handleSend(event) {
         event.preventDefault();
         this.setState({ writeError: null });
         try {
