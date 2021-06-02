@@ -342,6 +342,12 @@ class MainFeed extends React.Component {
                 <div>
                     Main Feed:
                     <Feed />
+                    <p>&nbsp;</p>
+                    <Button className="is-info">
+                        <Link class="button is-info" to="/upload">
+                            Create a Post
+                        </Link>
+                    </Button>
                 </div>
             </div>
         );
