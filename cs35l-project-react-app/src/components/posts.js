@@ -348,6 +348,12 @@ class MainFeed extends React.Component {
                 <CustomNavbar />
                 <div>
                     <Feed />
+                    <p>&nbsp;</p>
+                    <Button className="is-info">
+                        <Link class="button is-info" to="/upload">
+                            Create a Post
+                        </Link>
+                    </Button>
                 </div>
             </div>
         );
