@@ -11,12 +11,7 @@ import {
     Button,
     Columns,
     Navbar,
-    Box,
-    Heading,
-    Media,
-    Content,
 } from 'react-bulma-components';
-import { Link } from 'react-router-dom';
 
 class Post extends React.Component {
     render() {
