@@ -1,8 +1,8 @@
 import React from 'react';
 import { firebase, storage } from '../firebase';
 import db from '../firebase';
-<<<<<<< HEAD
 import {
+    Box,
     Card,
     Media,
     Heading,
@@ -12,18 +12,6 @@ import {
     Navbar,
 } from 'react-bulma-components';
 import { Link } from 'react-router-dom';
-=======
-import 'bulma/css/bulma.min.css';
-import {
-    Button,
-    Form,
-    Columns,
-    Card,
-    Navbar,
-    Box,
-    Heading,
-} from 'react-bulma-components';
->>>>>>> uniss
 
 class Post extends React.Component {
     render() {
@@ -490,7 +478,7 @@ class PostCreator extends React.Component {
                             <Button 
                             fullwidth
                             rounded 
-                            color="secondary"
+                            color="primary"
                             onClick={() => this.createPost()}
                             >
                                 Post
