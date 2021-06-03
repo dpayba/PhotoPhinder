@@ -15,7 +15,7 @@ Start by creating your Firebase database. This is where all your information  wi
 1. Go to https://firebase.google.com/ and click __Get Started__
 2. Login to your preferred Google account.
 3. Click on __Add Project__ and enter a project name when prompted
-![](https://i.gyazo.com/f2f5648d412d295d4faef5b009795cfc.png =330x250)
+![](readme_images/readme1.png =330x250)
 4. Then click __Create Project__
 5. You should now be redirected to your firebase console. This is where all of your data will be stored. We will return to this later.
 ![](https://gyazo.com/e6ffc3882c0cfaa4cec7d09c5bd5d6d7.png =650x450)  
