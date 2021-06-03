@@ -2,6 +2,7 @@ import React from 'react';
 import { firebase } from '../firebase';
 import db from '../firebase';
 import { Feed } from './posts.js';
+import { Link } from 'react-router-dom'
 import {
     Card,
     Media,
@@ -70,6 +71,12 @@ class OtherUserProfile extends React.Component {
                 </div>
 
                 <Feed createdByUser={this.props.match.params.uid} />
+                <p>&nbsp;</p>
+                    <Button className="is-info">
+                        <Link class="button is-info" to="/chat">
+                            Chat Now
+                        </Link>
+                    </Button>
             </div>
         );
     }
