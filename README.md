@@ -25,9 +25,13 @@ Start by creating your Firebase database. This is where all your information  wi
 ### Installation
 1. Install [Node.js](https://nodejs.org/en/)
 2. Clone this repository using the following command below
-```git clone https://github.com/armaan-abraham/cs35L-final-project.git```
-3. Install the npm packages
-```npm install```
+
+* ```git clone https://github.com/armaan-abraham/cs35L-final-project.git```
+
+3. Install the npm packages using
+
+* ```npm install```
+
 	- In the case installation may fail, the individual dependencies used are listed below
 		- ```npm install firebase``` 
 		- ```npm install react-router-dom``` 
