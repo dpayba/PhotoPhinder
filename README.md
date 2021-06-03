@@ -15,10 +15,11 @@ Start by creating your Firebase database. This is where all your information  wi
 1. Go to https://firebase.google.com/ and click __Get Started__
 2. Login to your preferred Google account.
 3. Click on __Add Project__ and enter a project name when prompted
-![](readme_images/readme1.png =330x250)
-4. Then click __Create Project__
+<img src="readme_images/readme1.png" width="300">
+
+4. Then click **Create Project**
 5. You should now be redirected to your firebase console. This is where all of your data will be stored. We will return to this later.
-![](https://gyazo.com/e6ffc3882c0cfaa4cec7d09c5bd5d6d7.png =650x450)  
+<img src="readme_images/readme2.png" width="650">
 
 
 ### Installation
@@ -33,7 +34,8 @@ Start by creating your Firebase database. This is where all your information  wi
 		- ```npm install bulma``` 
 4. Now we can continue configuring Firebase. Click on the HTML icon in the middle as we will be using Firebase for a web app.
 5. Create a name for your app and you should now have a configuration key
-![](https://gyazo.com/86483c05ad807a68f22907320ca967d5.png =600x650)
+<img src="readme_images/readme3.png" width="500">
+
 6. Navigate to the __firebase.js__ file in the source code and replace the configuration with your web apps configuration.
 7. Now you are ready to get started.
 
@@ -43,20 +45,37 @@ Start the program by running ```npm start```
 ### Front Page
 This is the page you will see when you first run the app. It provides information about the app and the purpose behind it, along with tools for navigation. From here you can login / signup, check out other creator's photos, or go to your profile.
 
+<img src="readme_images/readme4.png" width="700">
+
 ### Login 
 This is where you will be prompted to login to your account. You can either login using the email and password you created, or signup using the __Sign Up__ button
+
+<img src="readme_images/readme5.png" width="700">
 
 ### Sign Up
 Create an account from this page by insertinga  username, email, and password. The information you provide will then be stored in the database and be used to retrieve data about your account each time you log in.
 
+<img src="readme_images/readme6.png" width="700">
+
 ### Feed
 This is where you can explore the content of all the creators. Use the arrow keys to navigate through the posts with the ability to like any pictures you enjoy. Each post will display the username of the creator as you will have the ability to go to their profile and contact them. You can also upload photos yourself using the upload button.
+
+<img src="readme_images/readme7.png" width="700">
 
 ### Upload
 Upload a photo to your profile by choosing a file and clicking upload. You will then be redirected back to the feed where you can see your photo has been posted.
 
+<img src="readme_images/readme10.png" width="700">
+
+### Search
+After scrolling through the feed and finding a photographer you're interested in, you can search up their name using the __Search__ bar. It will then display the photographer you want to contact along with all of their pictures.
+
+<img src="readme_images/readme9.png" width="700">
+
 ### Profile
 This page contains all the pictures uploaded by the creator. From here, you can contact the creator by using the chat feature.
+
+<img src="readme_images/readme8.png" width="700">
 
 ### Chat
 Your own 1 on 1 conversation between the photographer and customer. Here you can arrange photoshoots and discuss any other details.
