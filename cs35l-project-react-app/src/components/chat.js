@@ -73,11 +73,11 @@ class Chat extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <input onChange={this.handleChange} value={this.state.content}></input>
                     {this.state.error ? <p>{this.state.writeError}</p> : null}
-                    <button type="submit">Send</button>
+                    <button type="submit">send</button>
                 </form>
 
                 <div>
-                    Login in as: <strong>{this.state.user.email}</strong>
+                    Logged in as: <strong>{this.state.user.uid}</strong>
                 </div>
             </div>
         );
