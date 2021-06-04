@@ -177,6 +177,12 @@ class Feed extends React.Component {
             .get()
             .then((snapshot) => {
                 const postsObj = snapshot.val();
+                if (!postsObj) {
+                    return Promise.resolve();
+                }
+
+
+
                 var posts = Object.keys(postsObj).map((key) => ({
                     ...postsObj[key],
                     id: key,
