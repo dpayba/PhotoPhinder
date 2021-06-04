@@ -4,10 +4,7 @@ import db from '../firebase';
 import { firebase } from '../firebase';
 
 // When chat button pressed, pull up this room
-// Will have a user already signed in or asked to sign in, and another user
-// If user ID is same as current user ID, that's the same person
-// Else, create a chat room with current user and profile of user clicked on
-// Will have two user IDs, current user sends message to other user.
+// Used as global forum for authenticated users to communicate
 
 class Chat extends React.Component {
     constructor(props) {
@@ -16,6 +13,7 @@ class Chat extends React.Component {
         this.state = {
             user: firebase.auth().currentUser,
             chats: [],
+            content: '',
             readError: null,
             writeError: null
         };
@@ -27,7 +25,7 @@ class Chat extends React.Component {
     async componentDidMount() {
         this.setState({ readError: null });
         try {
-            db.ref("chats").orderByChild().on("value", snapshot => {
+            db.ref("chats").on("value", snapshot => {
                 let chats = [];
                 snapshot.forEach((snap) => {
                     chats.push(snap.val());
@@ -50,7 +48,7 @@ class Chat extends React.Component {
         event.preventDefault();
         this.setState({ writeError: null });
         try {
-            await db.ref("chats").chatId.messages.push({
+            await db.ref("chats").push({
                 content: this.state.content,
                 timestamp: Date.now(),
                 uid: this.state.user.uid
