@@ -4,6 +4,7 @@ import Frontpage from './frontpage';
 import { MainFeed, PostCreator } from './components/posts.js';
 import { SignIn } from './components/auth.js';
 import { SignUp } from './components/auth.js';
+import Chat from './components/chat.js';
 import { CurrentUserProfile, OtherUserProfile } from './components/profile.js';
 import { firebase } from './firebase';
 import SearchForUser from './components/search.js';
@@ -38,6 +39,7 @@ const Routes = () => {
             <Route exact path="/" component={Frontpage}></Route>
             <Route path="/login" component={SignIn} />
             <Route path="/signup" component={SignUp} />
+            <PrivateRoute path="/chat" component={Chat}></PrivateRoute>
             <PrivateRoute path="/upload" component={PostCreator} />
             <PrivateRoute path="/feed" component={MainFeed} />
             <PrivateRoute path="/profile" component={CurrentUserProfile} />
