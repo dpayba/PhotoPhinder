@@ -28,7 +28,11 @@ Start by creating your Firebase database. This is where all your information  wi
 
 * ```git clone https://github.com/armaan-abraham/cs35L-final-project.git```
 
-3. Install the npm packages using
+3. Change into the project directory
+
+* ```cd cs35l-project-react-app```
+
+4. Install the npm packages using
 
 * ```npm install```
 
@@ -36,12 +40,12 @@ Start by creating your Firebase database. This is where all your information  wi
 		- ```npm install firebase``` 
 		- ```npm install react-router-dom``` 
 		- ```npm install bulma``` 
-4. Now we can continue configuring Firebase. Click on the HTML icon in the middle as we will be using Firebase for a web app.
-5. Create a name for your app and you should now have a configuration key
+5. Now we can continue configuring Firebase. Click on the HTML icon in the middle as we will be using Firebase for a web app.
+6. Create a name for your app and you should now have a configuration key
 <img src="readme_images/readme3.png" width="500">
 
-6. Navigate to the __firebase.js__ file in the source code and replace the configuration with your web apps configuration.
-7. Now you are ready to get started.
+7. Navigate to the __firebase.js__ file in the source code and replace the configuration with your web apps configuration.
+8. Now you are ready to get started.
 
 USAGE
 -----
@@ -83,3 +87,5 @@ This page contains all the pictures uploaded by the creator. From here, you can 
 
 ### Chat
 Your own 1 on 1 conversation between the photographer and customer. Here you can arrange photoshoots and discuss any other details.
+
+<img src="readme_images/readme11.png" width="700">

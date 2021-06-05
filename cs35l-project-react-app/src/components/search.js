@@ -115,8 +115,10 @@ class SearchForUser extends React.Component {
                 }
 
                 // return all results with a similar username
+                const searchQuery = this.state.searchEntry.toLowerCase();
                 results = results.filter(result => {
-                    return similarity(result.username, this.state.searchEntry) > 0.5;
+                    const username = result.username.toLowerCase();
+                    return username.includes(searchQuery) || searchQuery.includes(username) || similarity(username, searchQuery) > 0.5;
                 });
 
                 this.setState({
