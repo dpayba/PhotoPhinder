@@ -5,6 +5,8 @@ import { firebase } from '../firebase';
 
 // When chat button pressed, pull up this room
 // Used as global forum for authenticated users to communicate
+// This code is modeled after Deven Rathore tutorial:
+// https://css-tricks.com/building-a-real-time-chat-app-with-react-and-firebase/
 
 class Chat extends React.Component {
     constructor(props) {
