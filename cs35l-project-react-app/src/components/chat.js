@@ -12,8 +12,8 @@ class Chat extends React.Component {
 
         this.state = {
             user: firebase.auth().currentUser,
-            chats: [],
             content: '',
+            chats: [],
             readError: null,
             writeError: null
         };
@@ -50,7 +50,7 @@ class Chat extends React.Component {
         try {
             await db.ref("chats").push({
                 content: this.state.content,
-                timestamp: Date.now(),
+                time: Date.now(),
                 uid: this.state.user.uid
             });
             this.setState({ content: '' });
@@ -64,7 +64,7 @@ class Chat extends React.Component {
             <div>
                 <div className="chats">
                     {this.state.chats.map(chat => {
-                        return <p key={chat.timestamp}>{chat.content}</p>
+                        return <p key={chat.time}>{chat.content}</p>
                     })}
                 </div>
 
@@ -75,7 +75,7 @@ class Chat extends React.Component {
                 </form>
 
                 <div>
-                    Logged in as: <strong>{this.state.user.uid}</strong>
+                    Logged in as: <p>{this.state.user.uid}</p>
                 </div>
             </div>
         );
